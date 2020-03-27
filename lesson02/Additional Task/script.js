@@ -13,9 +13,10 @@ const productOfNumbers = (numder) => {
     return prod;
 };
 
-console.log(productOfNumbers(num));
-
 let bigNum = productOfNumbers(num);
+
+console.log(bigNum);
+
 let lot = bigNum ** 3;
 console.log(lot);
 
