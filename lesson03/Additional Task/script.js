@@ -39,7 +39,7 @@ lang === 'en' ? console.log(daysOfWeek[1]) : console.log(null);
 
 //2
 
-let namePerson = 'маКСИм';
+let namePerson = 'ЫАФФЦУФ';
 
 namePerson.toLowerCase() === 'артем' ? console.log('Директор') : console.log('студент');
 namePerson.toLowerCase() === 'максим' ? console.log('Преподаватель') : console.log('студент');

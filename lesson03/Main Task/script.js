@@ -55,7 +55,7 @@ function showRez(val){
 
 moneyEnter(money);
 
-addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую.');
+addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую.').toLowerCase().split(',');
 deposit = confirm('Есть ли у Вас депозит в банке?');
 console.log(addExpenses);
 
