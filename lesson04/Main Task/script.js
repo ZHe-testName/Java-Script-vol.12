@@ -8,18 +8,13 @@ let money = 0,
     deposit,
     mission = 500000,
     period = 0,
-    budgetDay = 0;
+    budgetDay = 0,
+    daysInMounth = 30;
 
-console.log(typeof money);
-console.log(typeof deposit);
-console.log(typeof income);
 
-console.log(addExpenses.length);
-
-console.log('Период равен ' + period + 'мес.');
-console.log('Цель заработать ' + mission + '$');
-
-console.log(addExpenses.toLowerCase().split(', '));
+function showTypeOf(data){
+    return (typeof(data));
+}
 
 function moneyEnter(){
     let prev = +prompt('Ваш месячный доход?');
@@ -55,11 +50,29 @@ function showRez(val){
     }
 }
 
+function getExpensesMonth(a, b){
+    return a + b;
+}
+
+function getAccumulatedMonth(income, exp1, exp2, callback){
+    let expenses = callback(exp1, exp2);
+    return income - expenses;
+}
+
+function getTargetMounth(target, mounhIncome){
+    return target / mounhIncome;
+}
+
+
+console.log(showTypeOf(money));
+console.log(showTypeOf(deposit));
+console.log(showTypeOf(income));
+
 moneyEnter(money);
 
 addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую.').toLowerCase().split(',');
 deposit = confirm('Есть ли у Вас депозит в банке?');
-console.log(addExpenses);
+console.log('Возможные расходы : ' + addExpenses);
 
 let expenses1 = prompt('Введите обязательную статью расходов.');
 amount1 = isItNumber(amount1);
@@ -67,17 +80,18 @@ amount1 = isItNumber(amount1);
 let expenses2 = prompt('Введите обязательную статью расходов.');
 amount2 = isItNumber(amount2);
 
-let budgetMounth = money - (amount1 + amount2);
-console.log('Бютжет на месяц : ' + budgetMounth);
+let accumulatedMounth = getAccumulatedMonth(money, amount1, amount2, getExpensesMonth);
+console.log('Чистый месячный доход : ' + accumulatedMounth);
 
-period = Math.ceil(mission / budgetMounth);
+console.log('Расходы за месяц : ' + getExpensesMonth(amount1, amount2));
+
+period = Math.ceil(getTargetMounth(mission, accumulatedMounth));
 console.log('Цель будет достигнута : ' + period + ' месяцев.');
 
-budgetDay = Math.floor(budgetMounth / 30);
+budgetDay = Math.floor(accumulatedMounth / 30);
 console.log('Бютжет на день : ' + budgetDay);
 
 showRez(budgetDay);
-
 
 
 
