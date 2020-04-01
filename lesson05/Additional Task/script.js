@@ -36,8 +36,8 @@ const eratosfenStyleFunc = function(n){
     for(let i = 2; i < n; i++){
         let isIt = false;
 
-        for(let j = 2; j < n; j++){
-            if(i % j === 0 && i !== j){
+        for(let j = 2; j < i - 1; j++){
+            if(i % j === 0){
                 isIt = true;
                 break;
             }
