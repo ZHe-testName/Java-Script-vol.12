@@ -64,7 +64,7 @@ const getExpensesMonth = function(){
     }
 
     return sum;
-}
+};
 
 function getAccumulatedMonth(income, mounthExpenses){
     return income - mounthExpenses;
