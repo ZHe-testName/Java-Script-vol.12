@@ -64,4 +64,14 @@ const eratosfenStyleFunc = function(arr){
     return simpleNums;
 };
 
-console.log(eratosfenStyleFunc(nums));
+const showRez = function(arr){
+    for(let i = 0; i < arr.length; i++){
+        console.log(arr[i] + ' Делители етого числа : 1 и ' + arr[i]);
+    }
+};
+
+let simpleNums = eratosfenStyleFunc(nums);
+
+showRez(simpleNums);
+
+
