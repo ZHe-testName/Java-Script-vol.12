@@ -64,12 +64,25 @@ const eratosfenStyleFunc = function(arr){
     return simpleNums;
 };
 
+
 const showRez = function(arr){
     for(let i = 0; i < arr.length; i++){
         console.log(arr[i] + ' Делители етого числа : 1 и ' + arr[i]);
     }
 };
 
+
+//или рекурсивно)))
+//чисто ради инереса
+/*
+let i = 0;
+const showRez = function func(arr){
+    console.log(arr[i] + ' Делители етого числа : 1 и ' + arr[i]);
+    i++;
+
+    (arr.length > i) ? func(arr) : console.log('Конец списка.');
+};
+*/
 let simpleNums = eratosfenStyleFunc(nums);
 
 showRez(simpleNums);
