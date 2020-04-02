@@ -1,7 +1,9 @@
 'use strict'
 
 function isItNumber(n){
-    
+    if(!isNaN(parseFloat(n)) && isFinite(n)){
+        return true;
+    }
 }
 
 function letsPlay(){
@@ -10,18 +12,23 @@ function letsPlay(){
 
     return function guess(){
         let yourChoise = prompt('Введите предпологаемое число.');
-
-        if(yourChoise == null){
+        
+        if(isItNumber(yourChoise)){
+            if(yourChoise === number){
+                alert('Вы угадали!!!');
+                return;
+            }else if(yourChoise < number){
+                alert('Загаданое число БОЛШЕ Вашего.');
+                guess();
+            }else if(yourChoise > number){
+                alert('Загаданое число МЕНЬШЕ Вашего.');    
+                guess();   
+            }
+        }else if(yourChoise == null){
             return;
-        }else if(yourChoise === number){
-            alert('Вы угадали!!!');
-            return;
-        }else if(yourChoise < number){
-            alert('Загаданое число БОЛШЕ Вашего.');
+        }else{
+            alert('Водите толко ЧИСЛА!!!');
             guess();
-        }else if(yourChoise > number){
-            alert('Загаданое число МЕНЬШЕ Вашего.');    
-            guess();   
         }
     }
 }
