@@ -6,6 +6,10 @@ function isItNumber(n){
     }
 }
 
+function playAgain(arg){
+    (arg === true) ? letsPlay()() : alert('До новых встреч.');
+}
+
 function letsPlay(){
     let number = Math.floor(Math.random() * 100);
     let attemptAmount = 10;
@@ -16,14 +20,14 @@ function letsPlay(){
 
         if(isItNumber(yourChoise)){
             if(attemptAmount === 1){
-                let failQestion = confirm('Попытки закончились.Может еще разочек?');
-
-                (failQestion === true) ? letsPlay()() : alert('До новых встреч.');
+                let failQuestion = confirm('Попытки закончились.Может еще разочек?');
+                
+                playAgain(failQuestion);
             }else if(yourChoise == number){
                 alert('Вы угадали!!!');
-                let qestion = confirm('Сыграем еще разок?');
+                let question = confirm('Сыграем еще разок?');
 
-                (qestion === true) ? letsPlay()() : alert('До новых встреч.');
+                playAgain(question);
             }else if(yourChoise < number){
                 attemptAmount--;
                 alert('Загаданое число БОЛШЕ Вашего.Осталось ' + attemptAmount + ' попыток.');
@@ -43,8 +47,8 @@ function letsPlay(){
     }
 }
 
-const Game = letsPlay();
+const game = letsPlay();
 
-Game();
+game();
 
 
