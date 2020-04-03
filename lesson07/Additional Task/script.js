@@ -10,7 +10,7 @@ const week = [
     'Saturday'
 ];
 
-let now = new Date().getDay();
+let now = new Date().getDay() ;
 let weekString = week.join(',');
 
 let days = document.createElement('div');
@@ -21,13 +21,13 @@ week.forEach(function(item, i){
     let oneDay = document.createElement('div');
 
     if((item === 'Saturday' &&  now === i) || (item === 'Sunday' && now === i)){
-        oneDay.innerHTML = `<strong><em>${item}</em></strong>`
+        oneDay.innerHTML = `<p><strong><em>${item}</em></strong></p>`
         document.body.append(oneDay);
     }else if(item === 'Saturday' || item === 'Sunday'){
-        oneDay.innerHTML = `<em>${item}</em>`
+        oneDay.innerHTML = `<p><em>${item}</em></p>`
         document.body.append(oneDay);
     }else if(now === i){
-        oneDay.innerHTML = `<strong>${item}</strong>`
+        oneDay.innerHTML = `<p><strong>${item}</strong></p>`
         document.body.append(oneDay);
     }else{
         oneDay.innerHTML = `<p>${item}</p>` 
