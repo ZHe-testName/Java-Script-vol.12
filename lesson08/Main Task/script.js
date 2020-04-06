@@ -22,7 +22,14 @@ let appData = {
     asking: function(){
         if(confirm('Есть ли у Вас дополнительный источник зароботка?')){
             let itemIncome = prompt('Источник Вашего дополнительного дохода?');
+            while(!isItString(itemIncome)){
+                itemIncome = prompt('Источник Вашего дополнительного дохода?');
+            }
+
             let cashIncome = prompt('Сколько в месяц Вы на етом зарабаываете?');
+            while(!isItNumber(cashIncome)){
+                cashIncome = prompt('Сколько в месяц Вы на етом зарабаываете?');
+            }
 
             appData.income[itemIncome] = cashIncome;
         }
@@ -34,18 +41,31 @@ let appData = {
 
         if(appData.deposit){
             appData.percentDeposit = prompt('Какой годовой процент депозита?');
+            while(!isItNumber(appData.percentDeposit)){
+                appData.percentDeposit = prompt('Какой годовой процент депозита?');
+            }
+
             appData.moneyDeposit = prompt('Какая сумма залога?');
+            while(!isItNumber(appData.moneyDeposit)){
+                appData.moneyDeposit = prompt('Какая сумма залога?');
+            }
+
+            appData.percentDeposit = +appData.percentDeposit;
+            appData.moneyDeposit = +appData.moneyDeposit;
         }
 
         for(let i = 0; i < 2; i++){
             let toKey = prompt('Введите обязательную статью расходов.');
+            while(!isItString(toKey)){
+                toKey = prompt('Введите обязательную статью расходов.');
+            }
+
             let toVal = prompt('Во сколько это обойдется?');
-            appData.expenses[toKey] = toVal;
-            
             while(!isItNumber(toVal)){
                 toVal = prompt('Во сколько это обойдется?');
-                appData.expenses[toKey] = toVal;
             }
+
+            appData.expenses[toKey] = +toVal;
         }
 
         appData.getExpensesMounth(appData.expenses);
@@ -90,7 +110,15 @@ function isItNumber(num){
     if(!isNaN(parseFloat(num)) && isFinite(num)){
         return true;
     }else{
-        alert('Нужно вводить толбко числа!');
+        alert('Нужно вводить только числа!');
+    }
+}
+
+function isItString(variable){
+    if(isNaN(variable)){
+        return true;
+    }else{
+        alert('Здесь нельзя вводить числа!');
     }
 }
 
@@ -128,4 +156,4 @@ for(let key in appData){
     console.log(key,  appData[key]);
 }
 
-console.log(appData.getSavedMoney());
+console.log(appData.addExpenses.map(item => item[0].toUpperCase() + item.substring(1)).join(', '));
