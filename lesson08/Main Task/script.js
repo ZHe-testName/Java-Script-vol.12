@@ -34,9 +34,13 @@ let appData = {
             appData.income[itemIncome] = cashIncome;
         }
 
-        appData.addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую.').
-        toLowerCase().split(',');
-
+        appData.addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую.');
+        if(appData.addExpenses){
+            appData.addExpenses.toLowerCase().split(',');
+        }else{
+            appData.addExpenses = ['Курсы GLO Academy'];
+        }
+       
         appData.deposit = confirm('Есть ли у Вас депозит в банке?');
 
         if(appData.deposit){
