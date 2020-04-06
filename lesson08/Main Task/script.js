@@ -1,7 +1,6 @@
 'use strict'
 
-'use strict'
-
+//duration === period с урока
 let money = 0;
 
 let appData = {
@@ -16,12 +15,27 @@ let appData = {
     budgetDay: 0,
     budgetMounth: 0,
     expensesMonth: 0,
+    percentDeposit: 0,
+    moneyDeposit: 0,
+    duration: 3,
 
     asking: function(){
+        if(confirm('Есть ли у Вас дополнительный источник зароботка?')){
+            let itemIncome = prompt('Источник Вашего дополнительного дохода?');
+            let cashIncome = prompt('Сколько в месяц Вы на етом зарабаываете?');
+
+            appData.income[itemIncome] = cashIncome;
+        }
+
         appData.addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую.').
         toLowerCase().split(',');
 
         appData.deposit = confirm('Есть ли у Вас депозит в банке?');
+
+        if(appData.deposit){
+            appData.percentDeposit = prompt('Какой годовой процент депозита?');
+            appData.moneyDeposit = prompt('Какая сумма залога?');
+        }
 
         for(let i = 0; i < 2; i++){
             let toKey = prompt('Введите обязательную статью расходов.');
@@ -63,6 +77,10 @@ let appData = {
         for(let key in obj){
            appData.expensesMonth += +obj[key];
         }
+    },
+
+    getSavedMoney: function(){
+        return appData.budgetMounth * appData.duration;
     }
 }
 
@@ -110,6 +128,4 @@ for(let key in appData){
     console.log(key,  appData[key]);
 }
 
-//console.log(Object.entries(appData));
-
-
+console.log(appData.getSavedMoney());
