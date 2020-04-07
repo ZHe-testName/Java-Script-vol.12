@@ -61,3 +61,4 @@ function showDate(str){
 
 showDate(makeDateStr(toDay));
 showDate(makeDateNumbers(toDay));
+//setInterval(showDate(makeDateStr(toDay)), 1000);
