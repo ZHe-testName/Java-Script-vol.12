@@ -33,7 +33,6 @@ function makeDateStr(date){
         return times[n % 10 === 1 && n % 100 !== 11 ?
                       0 : n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20) ? 1 : 2];
       }
-    ;
 
     let dateString = `Сегодня ${week[date.getDay()]},${date.getDate()} ${monthes[date.getMonth()]}
         ${date.getFullYear()} года,${date.getHours()} ${declOfNum(date.getHours(), ['час','часа','часов'])} ${date.getMinutes()}минут ${date.getSeconds()}секунды`;
