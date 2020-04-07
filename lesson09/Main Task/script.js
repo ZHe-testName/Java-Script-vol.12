@@ -3,11 +3,33 @@
 //duration === period с урока
 let money = 0;
 
+////////////// DOM Elements Variable Block ///////////////
+
+let buttonCalculate = document.getElementById('start'),
+    addIncomeButton = document.querySelector('.income>button'),
+    addExpensesButton = document.querySelector('.expenses>button'),
+    depositCheckBox = document.querySelector('#deposit-check'),
+    additionalIncomeItem = document.querySelectorAll('.additional_income-item'),
+    budgetDayValue = document.querySelector('.budget_day-value'),
+    expensesMonthValue = document.querySelector('.expenses_month-value'),
+    additionalIncomeValue = document.querySelector('.additional_income-value'),
+    additionalExpensesValue = document.querySelector('.additional_expenses-value'),
+    incomePeriodValue = document.querySelector('.income_period-value'),
+    targetMonthValue = document.querySelector('.target_month-value'),
+    salaryAmount = document.querySelector('.salary-amount'),
+    incomeTitle = document.querySelector('.income-title'),
+    incomeAmount = document.querySelector('.income-amount'),
+    expensesTitle = document.querySelector('.expenses-title'),
+    expensesAmount = document.querySelector('.expenses-amount'),
+    additionalExpensesItem = document.querySelector('.additional_expenses-item'),
+    targetAmount = document.querySelector('.target-amount'),
+    periodSelectRange = document.querySelector('.period-select');
+
 let appData = {
     income: {},
     addIncome: [],
     expenses: {},
-    addExpenses: [],
+    addExpenses: '',
     deposit: false,
     mission: 500000,
     period: 0,
@@ -34,9 +56,9 @@ let appData = {
             appData.income[itemIncome] = cashIncome;
         }
 
-        appData.addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую.');
-        if(appData.addExpenses){
-            appData.addExpenses.toLowerCase().split(',');
+        let otherExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую.');
+        if(otherExpenses){
+            appData.addExpenses = otherExpenses.toLowerCase().split(',');
         }else{
             appData.addExpenses = ['Курсы GLO Academy'];
         }
