@@ -53,18 +53,13 @@ function makeDateNumbers(date){
     return dateNumbers;
 }
 
-function showDate(str){
+function showDate(){
     let block = document.createElement('div');
-    block.innerHTML = `<p>${str}</p>`;
     document.body.append(block);
+    setInterval(function(){
+        block.innerHTML = `<p>${makeDateStr(new Date())}</p><p>${makeDateNumbers(new Date())}</p>`;
+    }, 1000);
 }
 
-showDate(makeDateStr(toDay));
-showDate(makeDateNumbers(toDay));
+showDate();
 
-let funcId = setInterval(function(){
-    let toDay = new Date;
-    showDate(makeDateStr(toDay));
-}, 1000);
-
-setTimeout(() => clearInterval(funcId), 5000);
