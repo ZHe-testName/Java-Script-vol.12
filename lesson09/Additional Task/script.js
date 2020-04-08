@@ -61,4 +61,10 @@ function showDate(str){
 
 showDate(makeDateStr(toDay));
 showDate(makeDateNumbers(toDay));
-//setInterval(showDate(makeDateStr(toDay)), 1000);
+
+let funcId = setInterval(function(){
+    let toDay = new Date;
+    showDate(makeDateStr(toDay));
+}, 1000);
+
+setTimeout(() => clearInterval(funcId), 5000);

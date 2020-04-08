@@ -25,6 +25,8 @@ let buttonCalculate = document.getElementById('start'),
     targetAmount = document.querySelector('.target-amount'),
     periodSelectRange = document.querySelector('.period-select');
 
+/////////////////////////////////////////////////////////
+
 let appData = {
     income: {},
     addIncome: [],
@@ -130,7 +132,7 @@ let appData = {
     }
 }
 
-/////////////////////////////////
+//////////////////////////////////////////
 
 function isItNumber(num){
     if(!isNaN(parseFloat(num)) && isFinite(num)){
