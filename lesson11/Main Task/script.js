@@ -27,6 +27,9 @@ let buttonCalculate = document.getElementById('start'),
     periodSelectRange = document.querySelector('.period-select'),
     periodAmount = document.querySelector('.period-amount');
 
+const strExp = /[\w]/;
+const numExp = /[a-zA-Zа-яА-Я]/;
+
 /////////////////////////////////////////////////////////
 
 //////////////appData Object///////////////
@@ -77,6 +80,10 @@ let appData = {
     addExpensesBlock: function(){
         let expensesItemClone = expensesItems[0].cloneNode(true);
 
+        expensesItemClone.childNodes.forEach(item => item.value = '');
+        expensesItemClone.firstElementChild.addEventListener('input', appData.validateStr);
+        expensesItemClone.lastElementChild.addEventListener('input', appData.validateNums);
+
         expensesItems[0].parentNode.insertBefore(expensesItemClone, addExpensesButton);
         expensesItems = document.querySelectorAll('.expenses-items');
 
@@ -86,9 +93,13 @@ let appData = {
     },
 
     addIncomeBlock: function(){
-        let expensesItemClone = incomeItems[0].cloneNode(true);
+        let incomeItemClone = incomeItems[0].cloneNode(true);
 
-        incomeItems[0].parentNode.insertBefore(expensesItemClone, addIncomeButton);
+        incomeItemClone.childNodes.forEach(item => item.value = '');
+        incomeItemClone.firstElementChild.addEventListener('input', appData.validateStr);
+        incomeItemClone.lastElementChild.addEventListener('input', appData.validateNums);
+
+        incomeItems[0].parentNode.insertBefore(incomeItemClone, addIncomeButton);
         incomeItems = document.querySelectorAll('.income-items');
 
         if(incomeItems.length === 3){
@@ -182,11 +193,29 @@ let appData = {
     },
 
     turnOnButton: function(){
-        if(salaryAmount.value.length >= 1){
-            buttonCalculate.removeAttribute('disabled');
-        }else{
+        if(salaryAmount.value.length == 0){
             buttonCalculate.setAttribute('disabled', 'disabled');
+        }else if(salaryAmount.value.length > 0){
+            buttonCalculate.removeAttribute('disabled');
         }   
+    },
+
+    validateStr: function(){
+        let str = String(this.value);
+
+        if(strExp.test(str)){
+            alert('Здесь можно вводить только русский текст.');
+            this.value = str.substr(0, str.length - 1);
+        }
+    },
+
+    validateNums: function(){
+        let numStr = String(this.value);
+
+        if(numExp.test(numStr)){
+            alert('Здесь можно вводить только цифры.');
+            this.value = numStr.substr(0, numStr.length - 1);
+        }
     }
 
 }
@@ -212,9 +241,17 @@ function isItString(variable){
 
 ////////////////////////////////////////////
 
-//buttonCalculate.addEventListener('mouseover', appData.clickBreacker);
+additionalIncomeItem.forEach(item => item.addEventListener('input', appData.validateStr));
+
+expensesItems[0].firstElementChild.addEventListener('input', appData.validateStr);
+expensesItems[0].lastElementChild.addEventListener('input', appData.validateNums);
+
+incomeItems[0].firstElementChild.addEventListener('input', appData.validateStr);
+incomeItems[0].lastElementChild.addEventListener('input', appData.validateNums);
 
 salaryAmount.addEventListener('input', appData.turnOnButton);
+
+salaryAmount.addEventListener('input', appData.validateNums);
 
 buttonCalculate.addEventListener('click', appData.start);
 
@@ -225,21 +262,8 @@ addIncomeButton.addEventListener('click', appData.addIncomeBlock);
 periodSelectRange.addEventListener('input', appData.changeRangeNumber);
 
 /*
-appData.budget = money;
-
-appData.asking();
-
-
-
-
-console.log('Расходы за месяц : ' + appData.expensesMonth);
-
-appData.getTargetMounth();
-
 (appData.period < 0 || !isFinite(appData.period)) ? console.log('Цель не будет достигнута.') :
 console.log('Цель будет достигнута за : ' + appData.period + ' месяцев.');
-
-appData.getStatusIncome();
 
 console.log('Наша программа включает в себя такие данные : ' );
 for(let key in appData){
