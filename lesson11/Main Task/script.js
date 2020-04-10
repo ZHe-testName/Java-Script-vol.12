@@ -46,11 +46,7 @@ let appData = {
     percentDeposit: 0,
     moneyDeposit: 0,
 
-    start: function(event){
-        if(salaryAmount.value === ""){
-            event.preventDefault();
-            return;
-        }
+    start: function(){
         appData.budget = +salaryAmount.value;
 
         appData.getExpenses();
@@ -185,6 +181,14 @@ let appData = {
         return appData.budgetMounth * periodSelectRange.value;
     },
 
+    turnOnButton: function(){
+        if(salaryAmount.value.length >= 1){
+            buttonCalculate.removeAttribute('disabled');
+        }else{
+            buttonCalculate.setAttribute('disabled', 'disabled');
+        }   
+    }
+
 }
 
 /////////////////////////////////////////////////////
@@ -209,6 +213,8 @@ function isItString(variable){
 ////////////////////////////////////////////
 
 //buttonCalculate.addEventListener('mouseover', appData.clickBreacker);
+
+salaryAmount.addEventListener('input', appData.turnOnButton);
 
 buttonCalculate.addEventListener('click', appData.start);
 
