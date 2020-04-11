@@ -51,21 +51,20 @@ let appData = {
     moneyDeposit: 0,
 
     start: function(){
-        appData.budget = +salaryAmount.value;
+        this.budget = +salaryAmount.value;
 
-        appData.getExpenses();
-        appData.getExpensesMounth(appData.expenses); 
-        appData.getAddExpenses();
-        appData.getIncome();
-        appData.getAddIncome();
-        appData.getIncomeMounth(appData.income);
-        appData.getTargetMounth();
+        this.getExpenses();
+        this.getExpensesMounth(appData.expenses); 
+        this.getAddExpenses();
+        this.getIncome();
+        this.getAddIncome();
+        this.getIncomeMounth(appData.income);
+        this.getTargetMounth();
 
-        appData.getBudget();
+        this.getBudget();
 
-        appData.showResults();
-        console.log(this);
-        appData.inputsBlocker();
+        this.showResults();
+        this.inputsBlocker();
     },
 
     showResults: function(){
@@ -231,7 +230,7 @@ let appData = {
             alert('Здесь можно вводить только цифры.');
             this.value = numStr.substr(0, numStr.length - 1);
         }
-    }
+    },
 
 }
 
@@ -253,6 +252,8 @@ function isItString(variable){
     }
 }
 
+let appDataStartFunc = appData.start.bind(appData);
+
 
 ////////////////////////////////////////////
 
@@ -268,7 +269,7 @@ salaryAmount.addEventListener('input', appData.turnOnButton);
 
 salaryAmount.addEventListener('input', appData.validateNums);
 
-buttonCalculate.addEventListener('click', appData.start);
+buttonCalculate.addEventListener('click', appDataStartFunc);
 
 addExpensesButton.addEventListener('click', appData.addExpensesBlock);
 
