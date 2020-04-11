@@ -1,0 +1,26 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+
+.field{
+    background-color: rgba(241, 241, 241, 0.24);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.hex-field{
+    font-size: 42px;
+    font-weight: bold;
+}
+
+.change-color{
+    width: 210px;
+    height: 50px;
+    border-radius: 10px;
+    outline: none;
+    cursor: pointer;
+    font-size: 20px;
+    font-family: fantasy;
+}

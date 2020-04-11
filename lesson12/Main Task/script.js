@@ -252,10 +252,12 @@ function isItString(variable){
     }
 }
 
-let appDataStartFunc = appData.start.bind(appData);
+
 
 
 ////////////////////////////////////////////
+
+let appDataStartFunc = appData.start.bind(appData);
 
 additionalIncomeItem.forEach(item => item.addEventListener('input', appData.validateStr));
 
