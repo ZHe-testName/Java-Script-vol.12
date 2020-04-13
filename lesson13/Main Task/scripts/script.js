@@ -5,22 +5,14 @@ const headerInput = document.querySelector('.header-input'),
     toDoList = document.querySelector('.todo-list'),
     toDoCompleted = document.querySelector('.todo-completed');
 
-const toDoData = [
-    {
-        value: 'Сварить кофе',
-        compleated: false,
-    },
-
-    {
-        value: 'Помыть посуду',
-        compleated: true,
-    },
-];
+let toDoData = [];
 
 function render(){
     toDoList.textContent = '';
     toDoCompleted.textContent = '';
     headerInput.value = '';
+
+    reloadOfLocalStorage();
 
     toDoData.forEach(function(item){
         let li = document.createElement('li');
@@ -39,20 +31,28 @@ function render(){
 
         toDoCompletedButton.addEventListener('click', function(){
             item.compleated = !item.compleated;
+
             render();
         });
 
         todoRemoveButton.addEventListener('click', function(){
             let index = toDoData.indexOf(item);
             toDoData.splice(index,1);
+
             render();
         })
-        
     })
 }
 
-toDoControl.addEventListener('submit', function(event){
-    event.preventDefault();
+function reloadOfLocalStorage(){
+    localStorage.setItem('toDoArr', JSON.stringify(toDoData));
+}
+
+function getDataFromLocalStorage(){
+    toDoData = JSON.parse(localStorage.getItem('toDoArr'));
+}
+
+function createToDoItem(){
     let newToDo = {};
     //Почему если убрать круглые скобки то условие всегда ложное if(!headerInput.value === '') === false ???
     //а со скобками работает...
@@ -61,9 +61,20 @@ toDoControl.addEventListener('submit', function(event){
             newToDo.compleated = false;
 
             toDoData.push(newToDo);
-            console.log(newToDo);
+
             render();
     }
+}
+
+toDoControl.addEventListener('submit', function(event){
+    event.preventDefault();
+    createToDoItem();
 });
 
+getDataFromLocalStorage();
 render();
+
+
+
+
+
