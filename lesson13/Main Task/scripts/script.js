@@ -50,6 +50,10 @@ function reloadOfLocalStorage(){
 
 function getDataFromLocalStorage(){
     toDoData = JSON.parse(localStorage.getItem('toDoArr'));
+
+    if(!toDoData){
+        toDoData = [];
+    }
 }
 
 function createToDoItem(){
