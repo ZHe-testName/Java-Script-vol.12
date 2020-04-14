@@ -1,7 +1,5 @@
 'use strict'
 
-//duration === period с урока
-
 ////////////// DOM Elements Variable Block ///////////////
 
 let buttonCalculate = document.getElementById('start'),
