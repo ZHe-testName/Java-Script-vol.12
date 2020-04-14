@@ -52,6 +52,7 @@ const AppData = function(){
 };
 
 AppData.prototype.start = function(){
+
     this.budget = +salaryAmount.value;
 
     this.getExpenses();
@@ -301,10 +302,50 @@ AppData.prototype.validateNums = function(){
     }
 };
 
-const appData = new AppData();
-console.log(appData);
-/////////////////////////////////////////////////////
+AppData.prototype.eventListeners = function(){
+    const _this = this;
 
+    additionalIncomeItem.forEach(item => item.addEventListener('input', _this.validateStr));
+
+    expensesItems[0].firstElementChild.addEventListener('input', this.validateStr);
+    expensesItems[0].lastElementChild.addEventListener('input', this.validateNums);
+
+    incomeItems[0].firstElementChild.addEventListener('input', this.validateStr);
+    incomeItems[0].lastElementChild.addEventListener('input', this.validateNums);
+
+    salaryAmount.addEventListener('input', this.turnOnButton);
+
+    salaryAmount.addEventListener('input', this.validateNums);
+
+    buttonCalculate.addEventListener('click', this.start.bind(this));
+
+    addExpensesButton.addEventListener('click', this.addExpensesBlock);
+
+    addIncomeButton.addEventListener('click', this.addIncomeBlock);
+
+    periodSelectRange.addEventListener('input', this.changeRangeNumber);
+
+    cancelButton.addEventListener('click', this.reset.bind(this));
+};
+
+const appData = new AppData();
+appData.eventListeners();
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+/*
+(appData.period < 0 || !isFinite(appData.period)) ? console.log('Цель не будет достигнута.') :
+console.log('Цель будет достигнута за : ' + appData.period + ' месяцев.');
+
+console.log('Наша программа включает в себя такие данные : ' );
+for(let key in appData){
+    console.log(key,  appData[key]);
+}
+
+console.log(appData.addExpenses.map(item => item[0].toUpperCase() + item.substring(1)).join(', '));
 function isItNumber(num){
     if(!isNaN(parseFloat(num)) && isFinite(num)){
         return true;
@@ -320,45 +361,4 @@ function isItString(variable){
         alert('Здесь нельзя вводить числа!');
     }
 }
-
-
-
-
-////////////////////////////////////////////
-
-let appDataResetFunc = appData.reset.bind(appData);
-let appDataStartFunc = appData.start.bind(appData);
-
-additionalIncomeItem.forEach(item => item.addEventListener('input', appData.validateStr));
-
-expensesItems[0].firstElementChild.addEventListener('input', appData.validateStr);
-expensesItems[0].lastElementChild.addEventListener('input', appData.validateNums);
-
-incomeItems[0].firstElementChild.addEventListener('input', appData.validateStr);
-incomeItems[0].lastElementChild.addEventListener('input', appData.validateNums);
-
-salaryAmount.addEventListener('input', appData.turnOnButton);
-
-salaryAmount.addEventListener('input', appData.validateNums);
-
-buttonCalculate.addEventListener('click', appDataStartFunc);
-
-addExpensesButton.addEventListener('click', appData.addExpensesBlock);
-
-addIncomeButton.addEventListener('click', appData.addIncomeBlock);
-
-periodSelectRange.addEventListener('input', appData.changeRangeNumber);
-
-cancelButton.addEventListener('click', appDataResetFunc);
-
-/*
-(appData.period < 0 || !isFinite(appData.period)) ? console.log('Цель не будет достигнута.') :
-console.log('Цель будет достигнута за : ' + appData.period + ' месяцев.');
-
-console.log('Наша программа включает в себя такие данные : ' );
-for(let key in appData){
-    console.log(key,  appData[key]);
-}
-
-console.log(appData.addExpenses.map(item => item[0].toUpperCase() + item.substring(1)).join(', '));
 */
