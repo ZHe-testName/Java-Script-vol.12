@@ -8,6 +8,7 @@ const DomElement = function(selector, height, width, bgCol, fonSize){
     this.bgCol = bgCol;
     this.fonSize = fonSize + 'px';
 
+
     this.createElement = function(){
         let element;
         if(this.selector[0] === '.'){
@@ -54,6 +55,7 @@ const DomElement = function(selector, height, width, bgCol, fonSize){
     }
 };
 
+
 //Или лучше в прототип писать???
 
 /*
@@ -79,8 +81,10 @@ DomElement.prototype.createElement= function(){
     };
 
 DomElement.prototype.moveElement = function(e){
+        const _this = DomElement.selector;
         let code = e.keyCode;
-        let elem = document.querySelector(selector);
+        let elem = document.querySelector(_this);
+        console.log(elem);
         let computedObj = getComputedStyle(elem);
 
         switch(code){
@@ -97,7 +101,7 @@ DomElement.prototype.moveElement = function(e){
                 elem.style.left = (+(computedObj.left.substring(0, computedObj.left.length - 2)) + 10) + 'px';
                 break;
         }
-    }
+    };
 */
 
 const newDiv = new DomElement('.block', 100, 100, 'red', 20);
