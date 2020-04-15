@@ -18,13 +18,14 @@ const buttonCalculate = document.getElementById('start'),
     incomeTitle = document.querySelector('.income-title'),
     incomeAmount = document.querySelector('.income-amount'),
     expensesTitle = document.querySelector('.expenses-title'),
-    expensesItems = document.querySelectorAll('.expenses-items'),
     additionalExpensesItem = document.querySelector('.additional_expenses-item'),
     targetAmount = document.querySelector('.target-amount'),
-    incomeItems = document.querySelectorAll('.income-items'),
     periodSelectRange = document.querySelector('.period-select'),
     periodAmount = document.querySelector('.period-amount'),
     cancelButton = document.querySelector('#cancel');
+
+let incomeItems = document.querySelectorAll('.income-items');
+let expensesItems = document.querySelectorAll('.expenses-items');
 
 const strExp = /[\w]/;
 const numExp = /[a-zA-Zа-яА-Я]/;
@@ -48,6 +49,7 @@ class AppData{
         this.expensesMonth = 0;
         this.percentDeposit = 0;
         this.moneyDeposit = 0;
+
     };
 
     start(){
@@ -66,9 +68,8 @@ class AppData{
     
         this.showResults();
         this.inputsBlocker();
-    
     };
-
+    
     showResults(){
         budgetMonthValue.value = this.budgetMounth;
         budgetDayValue.value = this.budgetDay;
@@ -100,7 +101,7 @@ class AppData{
     addIncomeBlock(){
         let incomeItemClone = incomeItems[0].cloneNode(true);
         const _this = this;
-    
+
         incomeItemClone.childNodes.forEach(item => item.value = '');
         incomeItemClone.firstElementChild.addEventListener('input', _this.validateStr);
         incomeItemClone.lastElementChild.addEventListener('input', _this.validateNums);
@@ -175,7 +176,7 @@ class AppData{
     };
     
     reset(){
-        const allInputs = document.querySelectorAll('input[type="text'),
+        let allInputs = document.querySelectorAll('input[type="text'),
             incomeItems = document.querySelectorAll('.income-items'),
             expensesItems = document.querySelectorAll('.expenses-items'),
             periodSelect = document.querySelector('.period-select'),
@@ -256,7 +257,6 @@ class AppData{
         }
     };
     
-    
     getExpensesMounth(obj){
         const _this = this;
     
@@ -320,18 +320,16 @@ class AppData{
     
         buttonCalculate.addEventListener('click', this.start.bind(this));
     
-        addExpensesButton.addEventListener('click', this.addExpensesBlock);
+        addExpensesButton.addEventListener('click', this.addExpensesBlock.bind(this));
     
-        addIncomeButton.addEventListener('click', this.addIncomeBlock);
+        addIncomeButton.addEventListener('click', this.addIncomeBlock.bind(this));
     
         periodSelectRange.addEventListener('input', this.changeRangeNumber);
     
         cancelButton.addEventListener('click', this.reset.bind(this));
     };
-    
 
 };
-
 
 
 
