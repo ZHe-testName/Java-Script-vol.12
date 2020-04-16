@@ -216,7 +216,12 @@ class AppData{
         cancelButton.style.display = 'none';
         buttonCalculate.style.display = 'block';
         buttonCalculate.setAttribute('disabled', 'disabled');
-        
+        depositCheckBox.checked = false;
+        depositAmount.style.display = 'none';
+        depositBank.style.display = 'none';
+        depositPercent.style.display = 'none';
+        depositAmount.value = '';
+        depositBank.value = '';
     };
 
     depositHandler(){
@@ -238,8 +243,9 @@ class AppData{
 
     getInfoDeposit(){
         if(this.deposit === true){
-            this.percentDeposit = depositBank.value;
+            this.percentDeposit = (depositBank.value === 'other') ? depositPercent.value : depositBank.value;
             this.moneyDeposit = depositAmount.value;
+            console.log(this.percentDeposit);
         }
     };
 
@@ -321,6 +327,16 @@ class AppData{
             this.value = numStr.substr(0, numStr.length - 1);
         }
     };
+
+    depositValidator(){
+        if(depositPercent.value > 100 || depositPercent.value < 0 || numExp.test(depositPercent.value)){
+            alert('Вводите корректное значение процентов депозита!');
+            depositPercent.value = depositPercent.value.substr(0, depositPercent.value.length - 1);
+            buttonCalculate.setAttribute('disabled', 'disabled');
+        }else if(salaryAmount.value.length > 0){
+            buttonCalculate.removeAttribute('disabled');
+        }
+    };
     
     eventListeners(){
     
@@ -347,6 +363,10 @@ class AppData{
         cancelButton.addEventListener('click', this.reset.bind(this));
 
         depositCheckBox.addEventListener('change', this.depositHandler.bind(this));
+
+        depositPercent.addEventListener('input', this.depositValidator);
+
+        depositAmount.addEventListener('input', this.validateNums);
     };
 
 };
