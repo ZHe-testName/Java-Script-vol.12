@@ -51,7 +51,6 @@ class AppData{
         this.expensesMonth = 0;
         this.percentDeposit = 0;
         this.moneyDeposit = 0;
-
     };
 
     start(){
@@ -75,63 +74,13 @@ class AppData{
     saveResults(){
         const strAppData = JSON.stringify(this);
         localStorage.setItem('AppData', strAppData);
-        this.setCookie(encodeURIComponent('AppDataObj'), encodeURIComponent(strAppData), {});
-        this.setCookie(encodeURIComponent('isLoad'), encodeURIComponent('true'), {});
+        setCookie(encodeURIComponent('AppDataObj'), encodeURIComponent(strAppData), {});
+        setCookie(encodeURIComponent('isLoad'), encodeURIComponent('true'), {});
 
         console.log(document.cookie);
     };
-
-    getCookie(name) {
-        let matches = document.cookie.match(new RegExp(
-          "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
-        ));
-        return matches ? decodeURIComponent(matches[1]) : undefined;
-      };
-
-    setCookie(name, value, options = {}) {
-
-        options = {
-          path: '/',
-          ...options
-        };
-      
-        if (options.expires instanceof Date) {
-          options.expires = options.expires.toUTCString();
-        }
-      
-        let updatedCookie = encodeURIComponent(name) + "=" + encodeURIComponent(value);
-      
-        for (let optionKey in options) {
-          updatedCookie += "; " + optionKey;
-          let optionValue = options[optionKey];
-          if (optionValue !== true) {
-            updatedCookie += "=" + optionValue;
-          }
-        }
-      
-        document.cookie = updatedCookie;
-      };
-      
-
-    deleteCookie(name) {
-        this.setCookie(name, "", {
-          'max-age': -1
-        })
-      };
-
-    cookiesRender(){
-        const renderSwich = Boolean(this.getCookie('isLoad'));
-       
-        if(renderSwich){
-            const cookieValue = this.getCookie('AppDataObj');
-            const returnedAppDataObj = JSON.parse(decodeURIComponent(cookieValue));
-            console.log(returnedAppDataObj);
-            this.showResults.call(returnedAppDataObj);
-        }
-    }
     
     showResults(){
-        console.log("rrr");
         budgetMonthValue.value = this.budgetMounth;
         budgetDayValue.value = this.budgetDay;
         expensesMonthValue.value = this.expensesMonth;
@@ -139,9 +88,10 @@ class AppData{
         additionalIncomeValue.value = this.addIncome.join(', ');
         targetMonthValue.value = this.period;
         incomePeriodValue.value = this.calcPeriod();
-    
+
         periodSelectRange.addEventListener('input', () => incomePeriodValue.value = this.calcPeriod());
     };
+
    
     addIncOrExpBlock(e){
         if(e.target.className === 'btn_plus income_add'){
@@ -284,8 +234,8 @@ class AppData{
         depositBank.value = '';
 
         localStorage.removeItem('AppData');
-        this.deleteCookie('AppDataObj');
-        this.deleteCookie('isLoad');
+        deleteCookie('AppDataObj');
+        deleteCookie('isLoad');
     };
 
     depositHandler(){
@@ -309,7 +259,6 @@ class AppData{
         if(this.deposit === true){
             this.percentDeposit = (depositBank.value === 'other') ? depositPercent.value : depositBank.value;
             this.moneyDeposit = depositAmount.value;
-            console.log(this.percentDeposit);
         }
     };
 
@@ -435,10 +384,63 @@ class AppData{
 
 };
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+function getCookie(name) {
+    let matches = document.cookie.match(new RegExp(
+      "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+    ));
+    return matches ? decodeURIComponent(matches[1]) : undefined;
+  };
+
+function setCookie(name, value, options = {}) {
+
+    options = {
+      path: '/',
+      ...options
+    };
+  
+    if (options.expires instanceof Date) {
+      options.expires = options.expires.toUTCString();
+    }
+  
+    let updatedCookie = encodeURIComponent(name) + "=" + encodeURIComponent(value);
+  
+    for (let optionKey in options) {
+      updatedCookie += "; " + optionKey;
+      let optionValue = options[optionKey];
+      if (optionValue !== true) {
+        updatedCookie += "=" + optionValue;
+      }
+    }
+  
+    document.cookie = updatedCookie;
+  };
+  
+
+function deleteCookie(name) {
+    setCookie(name, "", {
+      'max-age': -1
+    })
+  };
+
+function cookiesRender(obj){
+    const renderSwich = Boolean(getCookie('isLoad'));
+   
+    if(renderSwich){
+        const cookieValue = getCookie('AppDataObj');
+        const returnedAppDataObj = JSON.parse(decodeURIComponent(cookieValue));
+        Object.assign(obj, returnedAppDataObj);
+        obj.showResults();
+        obj.inputsBlocker();
+        buttonCalculate.style.display = 'none';
+        cancelButton.style.display = 'block';
+    }
+};
 
 const appData = new AppData();
-appData.cookiesRender();
+
+cookiesRender(appData);
 
 appData.eventListeners();
 
