@@ -68,10 +68,70 @@ class AppData{
         this.getBudget();
     
         this.showResults();
+        this.saveResults();
         this.inputsBlocker();
     };
+
+    saveResults(){
+        const strAppData = JSON.stringify(this);
+        localStorage.setItem('AppData', strAppData);
+        this.setCookie(encodeURIComponent('AppDataObj'), encodeURIComponent(strAppData), {});
+        this.setCookie(encodeURIComponent('isLoad'), encodeURIComponent('true'), {});
+
+        console.log(document.cookie);
+    };
+
+    getCookie(name) {
+        let matches = document.cookie.match(new RegExp(
+          "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+        ));
+        return matches ? decodeURIComponent(matches[1]) : undefined;
+      };
+
+    setCookie(name, value, options = {}) {
+
+        options = {
+          path: '/',
+          ...options
+        };
+      
+        if (options.expires instanceof Date) {
+          options.expires = options.expires.toUTCString();
+        }
+      
+        let updatedCookie = encodeURIComponent(name) + "=" + encodeURIComponent(value);
+      
+        for (let optionKey in options) {
+          updatedCookie += "; " + optionKey;
+          let optionValue = options[optionKey];
+          if (optionValue !== true) {
+            updatedCookie += "=" + optionValue;
+          }
+        }
+      
+        document.cookie = updatedCookie;
+      };
+      
+
+    deleteCookie(name) {
+        this.setCookie(name, "", {
+          'max-age': -1
+        })
+      };
+
+    cookiesRender(){
+        const renderSwich = Boolean(this.getCookie('isLoad'));
+       
+        if(renderSwich){
+            const cookieValue = this.getCookie('AppDataObj');
+            const returnedAppDataObj = JSON.parse(decodeURIComponent(cookieValue));
+            console.log(returnedAppDataObj);
+            this.showResults.call(returnedAppDataObj);
+        }
+    }
     
     showResults(){
+        console.log("rrr");
         budgetMonthValue.value = this.budgetMounth;
         budgetDayValue.value = this.budgetDay;
         expensesMonthValue.value = this.expensesMonth;
@@ -222,6 +282,10 @@ class AppData{
         depositPercent.style.display = 'none';
         depositAmount.value = '';
         depositBank.value = '';
+
+        localStorage.removeItem('AppData');
+        this.deleteCookie('AppDataObj');
+        this.deleteCookie('isLoad');
     };
 
     depositHandler(){
@@ -374,6 +438,8 @@ class AppData{
 
 
 const appData = new AppData();
+appData.cookiesRender();
+
 appData.eventListeners();
 
 
