@@ -74,7 +74,15 @@ class AppData{
     saveResults(){
         const strAppData = JSON.stringify(this);
         localStorage.setItem('AppData', strAppData);
-        setCookie(encodeURIComponent('AppDataObj'), encodeURIComponent(strAppData), {});
+        Object.entries(this).forEach(item => {
+            if(Array.isArray(item[1])){
+                setCookie(encodeURIComponent(`${item[0]}`), encodeURIComponent(item[1].join()), {});
+            }else if(typeof item[1] === 'object'){
+                setCookie(encodeURIComponent(`${item[0]}`), encodeURIComponent(JSON.stringify(item[1])), {});
+            }else{
+                setCookie(encodeURIComponent(`${item[0]}`), encodeURIComponent(item[1]), {});
+            }
+        })
         setCookie(encodeURIComponent('isLoad'), encodeURIComponent('true'), {});
 
         console.log(document.cookie);
@@ -234,8 +242,9 @@ class AppData{
         depositBank.value = '';
 
         localStorage.removeItem('AppData');
-        deleteCookie('AppDataObj');
+        Object.keys(this).forEach(item => deleteCookie(item)); 
         deleteCookie('isLoad');
+        console.log(document.cookie);
     };
 
     depositHandler(){
@@ -428,9 +437,23 @@ function cookiesRender(obj){
     const renderSwich = Boolean(getCookie('isLoad'));
    
     if(renderSwich){
-        const cookieValue = getCookie('AppDataObj');
-        const returnedAppDataObj = JSON.parse(decodeURIComponent(cookieValue));
-        Object.assign(obj, returnedAppDataObj);
+        const keyArr = Object.keys(obj);
+        
+        keyArr.forEach(item => {
+            let cookieItem;
+            
+            if(item === 'income' || item === 'expenses'){
+               cookieItem = JSON.parse(decodeURIComponent(getCookie(item)));
+            }else if(item === 'addIncome' || item === 'addExpenses'){
+                cookieItem = decodeURIComponent(getCookie(item)).split(',');
+            }else if(item === 'deposit'){
+                cookieItem = Boolean(+decodeURIComponent(getCookie(item)));
+            }else{
+                cookieItem = +decodeURIComponent(getCookie(item));
+            }
+            
+            obj[item] = cookieItem;
+        });
         obj.showResults();
         obj.inputsBlocker();
         buttonCalculate.style.display = 'none';
