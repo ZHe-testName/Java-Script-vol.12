@@ -76,16 +76,14 @@ class AppData{
         localStorage.setItem('AppData', strAppData);
         Object.entries(this).forEach(item => {
             if(Array.isArray(item[1])){
-                setCookie(encodeURIComponent(`${item[0]}`), encodeURIComponent(item[1].join()), {});
+                this.setCookie(encodeURIComponent(`${item[0]}`), encodeURIComponent(item[1].join()), {});
             }else if(typeof item[1] === 'object'){
-                setCookie(encodeURIComponent(`${item[0]}`), encodeURIComponent(JSON.stringify(item[1])), {});
+                this.setCookie(encodeURIComponent(`${item[0]}`), encodeURIComponent(JSON.stringify(item[1])), {});
             }else{
-                setCookie(encodeURIComponent(`${item[0]}`), encodeURIComponent(item[1]), {});
+                this.setCookie(encodeURIComponent(`${item[0]}`), encodeURIComponent(item[1]), {});
             }
         })
-        setCookie(encodeURIComponent('isLoad'), encodeURIComponent('true'), {});
-
-        console.log(document.cookie);
+        this.setCookie(encodeURIComponent('isLoad'), encodeURIComponent('true'), {});
     };
     
     showResults(){
@@ -242,9 +240,8 @@ class AppData{
         depositBank.value = '';
 
         localStorage.removeItem('AppData');
-        Object.keys(this).forEach(item => deleteCookie(item)); 
-        deleteCookie('isLoad');
-        console.log(document.cookie);
+        Object.keys(this).forEach(item => this.deleteCookie(item)); 
+        this.deleteCookie('isLoad');
     };
 
     depositHandler(){
@@ -359,6 +356,72 @@ class AppData{
             buttonCalculate.removeAttribute('disabled');
         }
     };
+
+    getCookie(name) {
+        let matches = document.cookie.match(new RegExp(
+          "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+        ));
+        return matches ? decodeURIComponent(matches[1]) : undefined;
+      };
+    
+    setCookie(name, value, options = {}) {
+    
+        options = {
+          path: '/',
+          ...options
+        };
+      
+        if (options.expires instanceof Date) {
+          options.expires = options.expires.toUTCString();
+        }
+      
+        let updatedCookie = encodeURIComponent(name) + "=" + encodeURIComponent(value);
+      
+        for (let optionKey in options) {
+          updatedCookie += "; " + optionKey;
+          let optionValue = options[optionKey];
+          if (optionValue !== true) {
+            updatedCookie += "=" + optionValue;
+          }
+        }
+      
+        document.cookie = updatedCookie;
+      };
+      
+    
+    deleteCookie(name) {
+        this.setCookie(name, "", {
+          'max-age': -1
+        })
+      };
+    
+    cookiesRender(){
+        const renderSwich = Boolean(this.getCookie('isLoad'));
+       
+        if(renderSwich){
+            const keyArr = Object.keys(this);
+            
+            keyArr.forEach(item => {
+                let cookieItem;
+                
+                if(item === 'income' || item === 'expenses'){
+                   cookieItem = JSON.parse(decodeURIComponent(this.getCookie(item)));
+                }else if(item === 'addIncome' || item === 'addExpenses'){
+                    cookieItem = decodeURIComponent(this.getCookie(item)).split(',');
+                }else if(item === 'deposit'){
+                    cookieItem = Boolean(+decodeURIComponent(this.getCookie(item)));
+                }else{
+                    cookieItem = +decodeURIComponent(this.getCookie(item));
+                }
+                
+                this[item] = cookieItem;
+            });
+            this.showResults();
+            this.inputsBlocker();
+            buttonCalculate.style.display = 'none';
+            cancelButton.style.display = 'block';
+        }
+    };
     
     eventListeners(){
     
@@ -395,75 +458,11 @@ class AppData{
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-function getCookie(name) {
-    let matches = document.cookie.match(new RegExp(
-      "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
-    ));
-    return matches ? decodeURIComponent(matches[1]) : undefined;
-  };
 
-function setCookie(name, value, options = {}) {
-
-    options = {
-      path: '/',
-      ...options
-    };
-  
-    if (options.expires instanceof Date) {
-      options.expires = options.expires.toUTCString();
-    }
-  
-    let updatedCookie = encodeURIComponent(name) + "=" + encodeURIComponent(value);
-  
-    for (let optionKey in options) {
-      updatedCookie += "; " + optionKey;
-      let optionValue = options[optionKey];
-      if (optionValue !== true) {
-        updatedCookie += "=" + optionValue;
-      }
-    }
-  
-    document.cookie = updatedCookie;
-  };
-  
-
-function deleteCookie(name) {
-    setCookie(name, "", {
-      'max-age': -1
-    })
-  };
-
-function cookiesRender(obj){
-    const renderSwich = Boolean(getCookie('isLoad'));
-   
-    if(renderSwich){
-        const keyArr = Object.keys(obj);
-        
-        keyArr.forEach(item => {
-            let cookieItem;
-            
-            if(item === 'income' || item === 'expenses'){
-               cookieItem = JSON.parse(decodeURIComponent(getCookie(item)));
-            }else if(item === 'addIncome' || item === 'addExpenses'){
-                cookieItem = decodeURIComponent(getCookie(item)).split(',');
-            }else if(item === 'deposit'){
-                cookieItem = Boolean(+decodeURIComponent(getCookie(item)));
-            }else{
-                cookieItem = +decodeURIComponent(getCookie(item));
-            }
-            
-            obj[item] = cookieItem;
-        });
-        obj.showResults();
-        obj.inputsBlocker();
-        buttonCalculate.style.display = 'none';
-        cancelButton.style.display = 'block';
-    }
-};
 
 const appData = new AppData();
 
-cookiesRender(appData);
+appData.cookiesRender();
 
 appData.eventListeners();
 
