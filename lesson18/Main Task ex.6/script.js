@@ -18,17 +18,15 @@ let hourNow = date.getHours(),
     numOfDay = date.getDay(),
     partOfDay = '',
     dayOfWeek = '',
-    timeInHours,
-    partOfTime = '',
+    timeInHours = date.toLocaleTimeString('en').slice(0, -3).split(':'),
+    partOfTime = date.toLocaleTimeString('en').slice(-2),
     daysToNextNY = Math.floor((nextNewYear - +date) / 1000 / 60 / 60 / 24);
 
-(hourNow >= 5 && hourNow <= 11) ? partOfDay = 'Доброе утро.' :
-    (hourNow >= 12 && hourNow <= 16) ? partOfDay = 'Добрый день.' :
-    (hourNow >= 17 && hourNow <= 21) ? partOfDay = 'Добрый вечер.' :
-    (hourNow >= 22 || hourNow <= 4) ? partOfDay = 'Доброй ночи.' : alert('Очень странно что это видно.');
-
-timeInHours = date.toLocaleTimeString('en').slice(0, -3).split(':');
-partOfTime = date.toLocaleTimeString('en').slice(-2);
+((hourNow >= 5 && partOfTime === 'AM') || (hourNow <= 11 && partOfTime === "AM")) ? partOfDay = 'Доброе утро.' :
+    ((hourNow == 12 && partOfTime === 'AM') || (hourNow <= 4 && partOfTime === "PM")) ? partOfDay = 'Добрый день.' :
+    ((hourNow >= 5 && partOfTime === 'PM') || (hourNow <= 9 && partOfTime === 'PM')) ? partOfDay = 'Добрый вечер.' :
+    ((hourNow >= 10 && partOfTime === 'PM') || hourNow <= 4 && partOfTime === 'AM') ? partOfDay = 'Доброй ночи.' : 
+    alert('Очень странно что это видно.');
 
 timeInHours.forEach((item, index) => {
     if(item.length !== 2){
