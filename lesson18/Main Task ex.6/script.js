@@ -18,12 +18,23 @@ let hourNow = date.getHours(),
     numOfDay = date.getDay(),
     partOfDay = '',
     dayOfWeek = '',
+    timeInHours,
+    partOfTime = '',
     daysToNextNY = Math.floor((nextNewYear - +date) / 1000 / 60 / 60 / 24);
 
 (hourNow >= 5 && hourNow <= 11) ? partOfDay = 'Доброе утро.' :
     (hourNow >= 12 && hourNow <= 16) ? partOfDay = 'Добрый день.' :
     (hourNow >= 17 && hourNow <= 21) ? partOfDay = 'Добрый вечер.' :
     (hourNow >= 22 || hourNow <= 4) ? partOfDay = 'Доброй ночи.' : alert('Очень странно что это видно.');
+
+timeInHours = date.toLocaleTimeString('en').slice(0, -3).split(':');
+partOfTime = date.toLocaleTimeString('en').slice(-2);
+
+timeInHours.forEach((item, index) => {
+    if(item.length !== 2){
+        timeInHours[index] = '0' + item;
+    }
+});
 
 switch(numOfDay){
     case 0:
@@ -53,7 +64,7 @@ switch(numOfDay){
 const div = document.createElement('div');
 div.innerHTML = `<p>${partOfDay}</p>
                     <p>Сегодня: ${dayOfWeek}.</p>
-                    <p>${date.toLocaleTimeString('en')}</p>
+                    <p>${timeInHours.join(':')} ${partOfTime}</p>
                     <p>До Нового Года осталось: ${daysToNextNY} дней.</p>`;
 
 head.insertAdjacentElement('afterend', div);
