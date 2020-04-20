@@ -37,7 +37,33 @@ window.addEventListener('DOMContentLoaded', function(){
         setInterval(updateClock, 1000);
     }
 
+    //24Hours day counter counter
+
+    function twentyFourHourCount(){
+        let sec = 0,
+            min = 0,
+            hours = 0;
+
+        setInterval(function(){
+            sec++;
+        
+            if(sec === 60){
+                min++;
+                sec = 0;
+            }
+            if(min === 60){
+                hours++;
+                min = 0;
+            }
+            if(hours === 24){
+                hours = 0;
+            }
+            console.log(sec, min, hours);
+        }, 1000);
+    }
+
     countTimer('22 April 2020');
-    
+
+    twentyFourHourCount();    
 });
 
