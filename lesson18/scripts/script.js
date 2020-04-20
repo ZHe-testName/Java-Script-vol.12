@@ -23,16 +23,18 @@ window.addEventListener('DOMContentLoaded', function(){
         function updateClock(){
             let timer = getTimeRemaning();
 
-            timerHours.textContent = timer.hours;
-            timerMinutes.textContent = timer.minutes;
-            timerSeconds.textContent = timer.seconds;
-
             if(timer.timeRemaning > 0){
-                setTimeout(updateClock, 1000);
+                timerHours.textContent = (timer.hours < 10) ? `0${timer.hours}` : timer.hours;
+                timerMinutes.textContent = (timer.minutes < 10) ? `0${timer.minutes}` : timer.minutes;
+                timerSeconds.textContent = (timer.seconds < 10) ? `0${timer.seconds}` : timer.seconds;
+            }else{
+                timerHours.textContent = '00';
+                timerMinutes.textContent = '00';
+                timerSeconds.textContent = '00';
             }
         }
 
-        updateClock();
+        setInterval(updateClock, 1000);
     }
 
     countTimer('22 April 2020');
