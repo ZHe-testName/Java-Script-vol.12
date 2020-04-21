@@ -2,7 +2,6 @@
 
 window.addEventListener('DOMContentLoaded', function(){
     //Timer to midnight
-
     function timeToMidnightCounter(){
         let timerHours = document.querySelector('#timer-hours'),
             timerMinutes = document.querySelector('#timer-minutes'),
@@ -33,9 +32,68 @@ window.addEventListener('DOMContentLoaded', function(){
         setInterval(clockRender, 1000);
     }
 
-    
+    //Menu activation
+    const toggleMenu = () => {
+        const menuButton = document.querySelector('.menu'),
+            menuBlock = document.querySelector('menu'),
+            menuCloseBtn = document.querySelector('.close-btn'),
+            menuItems = menuBlock.querySelectorAll('ul>li');
+
+        const hendlerMenu = () => {
+            menuBlock.classList.toggle('active-menu');
+        };
+
+        menuButton.addEventListener('click', hendlerMenu);
+
+        menuCloseBtn.addEventListener('click', hendlerMenu);
+
+        menuItems.forEach(item => item.addEventListener('click', () => hendlerMenu()));
+        
+    };
+
+    //PopUp windows
+    const togglePopUp = () => {
+        const popUpWindow = document.querySelector('.popup'),
+            popUpBtn = document.querySelectorAll('.popup-btn'),
+            popUpCloseBtn = document.querySelector('.popup-close'),
+            popUpContent = document.querySelector('.popup-content');
+        let leftLength = 10;
+
+        function popUpAnimate(){
+            if(document.documentElement.clientWidth > 768){
+                let animationInd;
+
+                popUpWindow.style.display = 'block';
+                popUpContent.style.left = '10px';
+                
+                const move = function(){
+                    leftLength += 15;
+                    animationInd = requestAnimationFrame(move)
+                        if(leftLength < 600){
+                            popUpContent.style.left = leftLength + 'px';
+                        }else{
+                            cancelAnimationFrame(animationInd);
+                            popUpContent.style.left = '';
+                            leftLength = 10;
+                        }
+                };
+
+                move();
+            }else{
+                popUpWindow.style.display = 'block';
+            }
+            
+        }
+
+        popUpBtn.forEach(item => item.addEventListener('click', popUpAnimate));
+
+        popUpCloseBtn.addEventListener('click', () => popUpWindow.style.display = 'none');
+    };
 
     timeToMidnightCounter();
+    toggleMenu();
+    togglePopUp();
+    console.log();
 });
 
 
