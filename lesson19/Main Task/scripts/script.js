@@ -2,12 +2,12 @@
 
 window.addEventListener('DOMContentLoaded', function(){
     //Timer to midnight
-    function timeToMidnightCounter(){
+    const timeToMidnightCounter = () =>{
         let timerHours = document.querySelector('#timer-hours'),
             timerMinutes = document.querySelector('#timer-minutes'),
             timerSeconds = document.querySelector('#timer-seconds');
         
-        function getTimeToMidnight(){
+        const getTimeToMidnight = () =>{
             let year = new Date().getFullYear(),
                 month = new Date().getMonth(),
                 tomorrow = new Date().getDate() + 1,
@@ -21,7 +21,7 @@ window.addEventListener('DOMContentLoaded', function(){
                 return {hours, minutes, seconds};
         }
 
-        function clockRender(){
+        const clockRender = () =>{
             let timeObj = getTimeToMidnight();
 
             timerHours.textContent = (timeObj.hours < 10) ? `0${timeObj.hours}` : timeObj.hours;
@@ -32,12 +32,12 @@ window.addEventListener('DOMContentLoaded', function(){
         setInterval(clockRender, 1000);
     }
 
-    //Menu activation
+    //Menu activation and navigation
     const toggleMenu = () => {
         const menuButton = document.querySelector('.menu'),
             menuBlock = document.querySelector('menu'),
             menuCloseBtn = document.querySelector('.close-btn'),
-            menuItems = menuBlock.querySelectorAll('ul>li');
+            menuItems = menuBlock.querySelectorAll('ul>li>a');
 
         const hendlerMenu = () => {
             menuBlock.classList.toggle('active-menu');
@@ -47,7 +47,18 @@ window.addEventListener('DOMContentLoaded', function(){
 
         menuCloseBtn.addEventListener('click', hendlerMenu);
 
-        menuItems.forEach(item => item.addEventListener('click', () => hendlerMenu()));
+        for(let item of menuItems){
+            item.addEventListener('click', (event) =>{
+                event.preventDefault();
+            
+                const sectionClass = item.getAttribute('href').substr(1);
+
+                document.querySelector(`.${sectionClass}`).scrollIntoView({block: 'start', behavior: 'smooth'});
+
+                hendlerMenu();
+                
+            });
+        };
         
     };
 
@@ -90,10 +101,24 @@ window.addEventListener('DOMContentLoaded', function(){
         popUpCloseBtn.addEventListener('click', () => popUpWindow.style.display = 'none');
     };
 
+    //Next slide
+    const goToNext = () => {
+        const nextBtn = document.querySelector('main>a');
+        
+        nextBtn.addEventListener('click', (event) => {
+            event.preventDefault();
+
+            let goTo = nextBtn.getAttribute('href').substr(1);
+
+            document.querySelector(`#${goTo}`).scrollIntoView({block: 'start', behavior: 'smooth'});
+        })
+    }
+
     timeToMidnightCounter();
     toggleMenu();
     togglePopUp();
-    console.log();
+    goToNext();
+
 });
 
 
