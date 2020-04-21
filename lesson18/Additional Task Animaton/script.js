@@ -29,8 +29,8 @@ function growing(){
                 smile.classList.add('animated', 'shake');
             }, 500);
             setTimeout(function(){
-                smile.classList.add('invisible');
                 buttonsBlock.insertAdjacentHTML('afterend', '<audio src="./sound/Sound_20955.mp3" autoplay></audio>');
+                smile.classList.add('invisible');
                 explosion.classList.add('bang');
                 playPause.setAttribute('disabled', 'disabled');
             }, 1000);
