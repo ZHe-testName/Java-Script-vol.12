@@ -3,7 +3,9 @@
 const smile = document.querySelector('#smile'),
     explosion = document.querySelector('#explosion'),
     reset = document.querySelector('#reset'),
-    playPause = document.querySelector('#playPause');
+    playPause = document.querySelector('#playPause'),
+    boomSound = document.querySelector('audio'),
+    buttonsBlock = document.querySelector('.buttons-block');
 
 let growingIntrval;
 let count = 100;
@@ -28,6 +30,7 @@ function growing(){
             }, 500);
             setTimeout(function(){
                 smile.classList.add('invisible');
+                buttonsBlock.insertAdjacentHTML('afterend', '<audio src="./sound/Sound_20955.mp3" autoplay></audio>');
                 explosion.classList.add('bang');
                 playPause.setAttribute('disabled', 'disabled');
             }, 1000);
@@ -45,6 +48,9 @@ function rePlay(){
     smile.style.width = count + 'px';
     smile.style.height = count + 'px';
     playPause.removeAttribute('disabled');
+
+    let boom = document.querySelector('audio');
+    boom.remove();
 }
 
 function pause(){
