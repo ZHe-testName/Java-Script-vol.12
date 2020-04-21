@@ -54,8 +54,6 @@ function pause(){
     playPause.classList.toggle('pause');
 }
 
-console.log(playPause.className === 'button play');
-
 reset.addEventListener('click', rePlay);
 playPause.addEventListener('click', function(){
     if(playPause.className === 'button play'){
