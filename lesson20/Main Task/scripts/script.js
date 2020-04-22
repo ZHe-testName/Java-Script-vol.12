@@ -34,59 +34,39 @@ window.addEventListener('DOMContentLoaded', function(){
 
     //Menu activation and navigation
     const toggleMenu = () => {
-        const menuButton = document.querySelector('.menu'),
-            menuBlock = document.querySelector('menu'),
-            menuCloseBtn = document.querySelector('.close-btn'),
-            menuItems = menuBlock.querySelectorAll('ul>li>a');
+        const menuBlock = document.querySelector('menu'),
+            body = document.querySelector('body');
 
         const hendlerMenu = () => {
             menuBlock.classList.toggle('active-menu');
         };
 
-        menuButton.addEventListener('click', hendlerMenu);
-
-        menuBlock.addEventListener('click', (event) => {
+        body.addEventListener('click', (event) => {
             let target = event.target,
                 link = target.closest('a');
                 
-            if(target.classList.contains('close-btn')){
-                hendlerMenu();
-            }else if(link){
-                event.preventDefault();
-                hendlerMenu();
-
-                let sectionClass = link.getAttribute('href').substr(1);
-
-                if(sectionClass.includes('-')){
-                    sectionClass = sectionClass.substr(0, sectionClass.indexOf('-'));
-                }
-                
-                document.querySelector(`.${sectionClass}`).scrollIntoView({block: 'start', behavior: 'smooth'});
-                
-            }else{
-                target = target.closest('menu');
-                console.log(target);
-                if(!target){
+            if(link){
+                if(link.classList.contains('close-btn')){
                     hendlerMenu();
-                }
-            }
-        })
+                }else{
+                    event.preventDefault();
+                    hendlerMenu();
 
-        // menuCloseBtn.addEventListener('click', hendlerMenu);
+                    let sectionClass = link.getAttribute('href').substr(1);
 
-        // for(let item of menuItems){
-        //     item.addEventListener('click', (event) =>{
-        //         event.preventDefault();
+                    if(sectionClass.includes('-')){
+                        sectionClass = sectionClass.substr(0, sectionClass.indexOf('-'));
+                    }
+                    
+                    document.querySelector(`.${sectionClass}`).scrollIntoView({block: 'start', behavior: 'smooth'});
+                }}else{
+                    target = target.closest('menu');
             
-        //         const sectionClass = item.getAttribute('href').substr(1);
-
-        //         document.querySelector(`.${sectionClass}`).scrollIntoView({block: 'start', behavior: 'smooth'});
-
-        //         hendlerMenu();
-                
-        //     });
-        // };
-        
+                    if(!target){
+                        hendlerMenu();
+                    }
+            }
+        });
     };
 
     //PopUp windows
