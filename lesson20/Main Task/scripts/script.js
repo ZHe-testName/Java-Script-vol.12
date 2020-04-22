@@ -48,7 +48,7 @@ window.addEventListener('DOMContentLoaded', function(){
             if(link){
                 if(link.classList.contains('close-btn')){
                     hendlerMenu();
-                }else{
+                }else if(link.closest('li')){
                     event.preventDefault();
                     hendlerMenu();
 
@@ -59,12 +59,13 @@ window.addEventListener('DOMContentLoaded', function(){
                     }
                     
                     document.querySelector(`.${sectionClass}`).scrollIntoView({block: 'start', behavior: 'smooth'});
-                }}else{
-                    target = target.closest('menu');
-            
-                    if(!target){
-                        hendlerMenu();
-                    }
+                }else if(target.classList.contains('.menu')){
+                    hendlerMenu();
+                }
+            }else if((target.closest('main')) && (menuBlock.classList.contains('active-menu'))){
+                hendlerMenu();          
+            }else if(target.closest('.menu')){
+                hendlerMenu();
             }
         });
     };
