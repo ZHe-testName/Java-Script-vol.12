@@ -78,7 +78,7 @@ window.addEventListener('DOMContentLoaded', function(){
                     breakPoint = ((document.documentElement.clientWidth - popUpContent.offsetWidth) / 2) + 50;
                 
                 const move = function(){
-                    leftLength += 15;
+                    leftLength += 20;
                     animationInd = requestAnimationFrame(move)
                         if(leftLength < Math.ceil(breakPoint)){
                             popUpContent.style.left = leftLength + 'px';
