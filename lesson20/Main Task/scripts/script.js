@@ -45,20 +45,47 @@ window.addEventListener('DOMContentLoaded', function(){
 
         menuButton.addEventListener('click', hendlerMenu);
 
-        menuCloseBtn.addEventListener('click', hendlerMenu);
-
-        for(let item of menuItems){
-            item.addEventListener('click', (event) =>{
-                event.preventDefault();
-            
-                const sectionClass = item.getAttribute('href').substr(1);
-
-                document.querySelector(`.${sectionClass}`).scrollIntoView({block: 'start', behavior: 'smooth'});
-
-                hendlerMenu();
+        menuBlock.addEventListener('click', (event) => {
+            let target = event.target,
+                link = target.closest('a');
                 
-            });
-        };
+            if(target.classList.contains('close-btn')){
+                hendlerMenu();
+            }else if(link){
+                event.preventDefault();
+                hendlerMenu();
+
+                let sectionClass = link.getAttribute('href').substr(1);
+
+                if(sectionClass.includes('-')){
+                    sectionClass = sectionClass.substr(0, sectionClass.indexOf('-'));
+                }
+                
+                document.querySelector(`.${sectionClass}`).scrollIntoView({block: 'start', behavior: 'smooth'});
+                
+            }else{
+                target = target.closest('menu');
+                console.log(target);
+                if(!target){
+                    hendlerMenu();
+                }
+            }
+        })
+
+        // menuCloseBtn.addEventListener('click', hendlerMenu);
+
+        // for(let item of menuItems){
+        //     item.addEventListener('click', (event) =>{
+        //         event.preventDefault();
+            
+        //         const sectionClass = item.getAttribute('href').substr(1);
+
+        //         document.querySelector(`.${sectionClass}`).scrollIntoView({block: 'start', behavior: 'smooth'});
+
+        //         hendlerMenu();
+                
+        //     });
+        // };
         
     };
 
