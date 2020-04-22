@@ -69,18 +69,18 @@ window.addEventListener('DOMContentLoaded', function(){
             popUpCloseBtn = document.querySelector('.popup-close'),
             popUpContent = document.querySelector('.popup-content');
         let leftLength = 10;
-
+        
         function popUpAnimate(){
             if(document.documentElement.clientWidth > 768){
-                let animationInd;
-
                 popUpWindow.style.display = 'block';
                 popUpContent.style.left = '10px';
+                let animationInd,
+                    breakPoint = ((document.documentElement.clientWidth - popUpContent.offsetWidth) / 2) + 50;
                 
                 const move = function(){
                     leftLength += 15;
                     animationInd = requestAnimationFrame(move)
-                        if(leftLength < 600){
+                        if(leftLength < Math.ceil(breakPoint)){
                             popUpContent.style.left = leftLength + 'px';
                         }else{
                             cancelAnimationFrame(animationInd);
