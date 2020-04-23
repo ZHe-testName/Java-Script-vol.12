@@ -166,13 +166,15 @@ window.addEventListener('DOMContentLoaded', function(){
         })
     };
 
+    //Slider actions
     const slider = () => {
         const slides = document.querySelectorAll('.portfolio-item'),
             btns = document.querySelectorAll('.portfolio-btn'),
             dots = document.querySelectorAll('.dot'),
             slider = document.querySelector('.portfolio-content');
         
-        let curentSlide = 0;
+        let curentSlide = 0,
+            interval;
 
         const hideSlide = (elem, index, classStr) => {
             elem[index].classList.remove(classStr);
@@ -195,41 +197,62 @@ window.addEventListener('DOMContentLoaded', function(){
             showSlide(dots, curentSlide, 'dot-active');
         };
 
-        const startSlide = (time) => {
-            setInterval(autoPlaySlide, time);
+        const startSlide = (time = 2000) => {
+            interval = setInterval(autoPlaySlide, time);
         };
 
         const stopSlide = () => {
-
+            clearInterval(interval);
         };
 
-        //startSlide(2000);
+        startSlide();
 
         slider.addEventListener('click', (event) => {
             event.preventDefault();
 
             let target = event.target;
-
-            if(target.matches('#arrow-left, #arrow-right, .dot')){
-                hideSlide(slides, curentSlide, 'portfolio-item-active');
-                hideSlide(dots, curentSlide, 'dot-active');
-
-                if(target.matches('#arrow-left')){
-                    curentSlide--;
-                }else if(target.matches('#arrow-right')){
-                    curentSlide++;
-                }else if(target.matches('.dot')){
-                    dots.forEach((elem, index) => {
-                        if(elem === target){
-                            curentSlide = index;
-                        }
-                    })
-                }
-
-                showSlide(slides, curentSlide, 'portfolio-item-active');
-                showSlide(dots, curentSlide, 'dot-active');
+ 
+            if(!target.matches('.portfolio-btn, .dot')){
+                return;
             }
 
+            hideSlide(slides, curentSlide, 'portfolio-item-active');
+            hideSlide(dots, curentSlide, 'dot-active');
+
+            if(target.matches('#arrow-left')){
+                curentSlide--;
+            }else if(target.matches('#arrow-right')){
+                curentSlide++;
+            }else if(target.matches('.dot')){
+                dots.forEach((elem, index) => {
+                    if(elem === target){
+                        curentSlide = index;
+                    }
+                })
+            }
+
+            if(curentSlide >= slides.length){
+                curentSlide = 0;
+            }else if(curentSlide < 0){
+                curentSlide = slides.length -1;
+            }
+
+            showSlide(slides, curentSlide, 'portfolio-item-active');
+            showSlide(dots, curentSlide, 'dot-active');
+           
+
+        })
+
+        slider.addEventListener('mouseover', (event) => {
+            if(event.target.matches('.portfolio-btn') || event.target.matches('.dot')){
+                stopSlide();
+            }
+        });
+
+        slider.addEventListener('mouseout', (event) => {
+            if(event.target.matches('.portfolio-btn') || event.target.matches('.dot')){
+                startSlide();
+            }
         })
     };
     timeToMidnightCounter();
