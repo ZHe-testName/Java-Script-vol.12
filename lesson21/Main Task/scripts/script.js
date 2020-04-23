@@ -35,13 +35,13 @@ window.addEventListener('DOMContentLoaded', function(){
     //Menu activation and navigation
     const toggleMenu = () => {
         const menuBlock = document.querySelector('menu'),
-            body = document.querySelector('body');
+            main = document.querySelector('main');
 
         const hendlerMenu = () => {
             menuBlock.classList.toggle('active-menu');
         };
 
-        body.addEventListener('click', (event) => {
+        menuBlock.addEventListener('click', (event) => {
             let target = event.target,
                 link = target.closest('a');
                 
@@ -59,12 +59,16 @@ window.addEventListener('DOMContentLoaded', function(){
                     }
                     
                     document.querySelector(`.${sectionClass}`).scrollIntoView({block: 'start', behavior: 'smooth'});
-                }else if(target.classList.contains('.menu')){
-                    hendlerMenu();
                 }
-            }else if((target.closest('main')) && (menuBlock.classList.contains('active-menu'))){
-                hendlerMenu();          
-            }else if(target.closest('.menu')){
+            }
+        });
+
+        main.addEventListener('click', (event) => {
+            let target = event.target;
+
+            if(target.closest('.menu')){
+                hendlerMenu();
+            }else if(target.closest('main') && (menuBlock.classList.contains('active-menu'))){
                 hendlerMenu();
             }
         });
@@ -169,12 +173,12 @@ window.addEventListener('DOMContentLoaded', function(){
     //Slider actions
     const slider = () => {
         const slides = document.querySelectorAll('.portfolio-item'),
-            btns = document.querySelectorAll('.portfolio-btn'),
-            dots = document.querySelectorAll('.dot'),
-            slider = document.querySelector('.portfolio-content');
+            slider = document.querySelector('.portfolio-content'),
+            portfolioDots = document.querySelector('.portfolio-dots');
         
         let curentSlide = 0,
-            interval;
+            interval,
+            dots;
 
         const hideSlide = (elem, index, classStr) => {
             elem[index].classList.remove(classStr);
@@ -184,15 +188,28 @@ window.addEventListener('DOMContentLoaded', function(){
             elem[index].classList.add(classStr);
         };
 
+        const dotsRender = (amount) => {
+            portfolioDots.innerHTML = '';
+
+            for(let i = 0; i < (amount + 1); i++){
+                let li = document.createElement('li');
+                li.classList.add('dot');
+                portfolioDots.append(li);
+            }
+
+            dots = document.querySelectorAll('.dot');
+        };
+
         const autoPlaySlide = () => {
             hideSlide(slides, curentSlide, 'portfolio-item-active');
-            hideSlide(dots, curentSlide, 'dot-active');
+    
             curentSlide++;
             
             if(curentSlide >= slides.length){
                 curentSlide = 0;
             }
 
+            dotsRender(curentSlide);
             showSlide(slides, curentSlide, 'portfolio-item-active');
             showSlide(dots, curentSlide, 'dot-active');
         };
@@ -206,8 +223,11 @@ window.addEventListener('DOMContentLoaded', function(){
         };
 
         startSlide();
+        dotsRender(curentSlide);
+        showSlide(dots, curentSlide, 'dot-active');
 
         slider.addEventListener('click', (event) => {
+            
             event.preventDefault();
 
             let target = event.target;
@@ -217,7 +237,6 @@ window.addEventListener('DOMContentLoaded', function(){
             }
 
             hideSlide(slides, curentSlide, 'portfolio-item-active');
-            hideSlide(dots, curentSlide, 'dot-active');
 
             if(target.matches('#arrow-left')){
                 curentSlide--;
@@ -230,13 +249,14 @@ window.addEventListener('DOMContentLoaded', function(){
                     }
                 })
             }
-
+        
             if(curentSlide >= slides.length){
                 curentSlide = 0;
             }else if(curentSlide < 0){
                 curentSlide = slides.length -1;
             }
 
+            dotsRender(curentSlide);
             showSlide(slides, curentSlide, 'portfolio-item-active');
             showSlide(dots, curentSlide, 'dot-active');
            
@@ -255,6 +275,7 @@ window.addEventListener('DOMContentLoaded', function(){
             }
         })
     };
+
     timeToMidnightCounter();
     toggleMenu();
     togglePopUp();
