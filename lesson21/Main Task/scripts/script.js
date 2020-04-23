@@ -132,7 +132,7 @@ window.addEventListener('DOMContentLoaded', function(){
 
             document.querySelector(`#${goTo}`).scrollIntoView({block: 'start', behavior: 'smooth'});
         })
-    }
+    };
 
     //Tabs switcher
     const tabs = () => {
@@ -164,13 +164,80 @@ window.addEventListener('DOMContentLoaded', function(){
                 })
             }
         })
-    }
+    };
 
+    const slider = () => {
+        const slides = document.querySelectorAll('.portfolio-item'),
+            btns = document.querySelectorAll('.portfolio-btn'),
+            dots = document.querySelectorAll('.dot'),
+            slider = document.querySelector('.portfolio-content');
+        
+        let curentSlide = 0;
+
+        const hideSlide = (elem, index, classStr) => {
+            elem[index].classList.remove(classStr);
+        };
+
+        const showSlide = (elem, index, classStr) => {
+            elem[index].classList.add(classStr);
+        };
+
+        const autoPlaySlide = () => {
+            hideSlide(slides, curentSlide, 'portfolio-item-active');
+            hideSlide(dots, curentSlide, 'dot-active');
+            curentSlide++;
+            
+            if(curentSlide >= slides.length){
+                curentSlide = 0;
+            }
+
+            showSlide(slides, curentSlide, 'portfolio-item-active');
+            showSlide(dots, curentSlide, 'dot-active');
+        };
+
+        const startSlide = (time) => {
+            setInterval(autoPlaySlide, time);
+        };
+
+        const stopSlide = () => {
+
+        };
+
+        //startSlide(2000);
+
+        slider.addEventListener('click', (event) => {
+            event.preventDefault();
+
+            let target = event.target;
+
+            if(target.matches('#arrow-left, #arrow-right, .dot')){
+                hideSlide(slides, curentSlide, 'portfolio-item-active');
+                hideSlide(dots, curentSlide, 'dot-active');
+
+                if(target.matches('#arrow-left')){
+                    curentSlide--;
+                }else if(target.matches('#arrow-right')){
+                    curentSlide++;
+                }else if(target.matches('.dot')){
+                    dots.forEach((elem, index) => {
+                        if(elem === target){
+                            curentSlide = index;
+                        }
+                    })
+                }
+
+                showSlide(slides, curentSlide, 'portfolio-item-active');
+                showSlide(dots, curentSlide, 'dot-active');
+            }
+
+        })
+    };
     timeToMidnightCounter();
     toggleMenu();
     togglePopUp();
     goToNext();
     tabs();
+    slider();
 
 });
 
