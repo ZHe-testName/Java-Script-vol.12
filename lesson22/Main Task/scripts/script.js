@@ -303,7 +303,13 @@ window.addEventListener('DOMContentLoaded', function(){
 
     //Validator for calculator
     const calcValidator = () => {
+        const calcInputs = document.querySelectorAll('input.calc-item');
         
+        calcInputs.forEach((calcImp) => {
+            calcImp.addEventListener('input', () => {
+                calcImp.value = calcImp.value.replace(/\D/, '');
+            })
+        })
     };
 
     timeToMidnightCounter();
@@ -313,6 +319,7 @@ window.addEventListener('DOMContentLoaded', function(){
     tabs();
     slider();
     changeImg();
+    calcValidator();
 
 });
 
