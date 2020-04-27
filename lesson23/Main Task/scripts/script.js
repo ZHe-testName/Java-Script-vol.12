@@ -321,6 +321,18 @@ window.addEventListener('DOMContentLoaded', function(){
             calcDay = document.querySelector('.calc-day'),
             totalValue = document.getElementById('total');
 
+        const totalAnimate = (finishRez) => {
+            let num = 0;
+            let intervalIndex = setInterval(() => {
+                if(finishRez >= num){
+                    totalValue.textContent = num;
+                    num += 100;
+                }else if(finishRez < num){
+                    clearInterval(intervalIndex);
+                }
+            }, 10);
+        };
+
         const countSum = () => {
             let total = 0,
                 countValue =  1,
@@ -341,9 +353,8 @@ window.addEventListener('DOMContentLoaded', function(){
             
             if(typeValue && squareValue){
                 total = Math.floor(price * typeValue * squareValue * countValue * dayValue);
+                totalAnimate(total);
             }
-
-            totalValue.textContent = total;
         };
 
         calcBlock.addEventListener('change', (event) => {
