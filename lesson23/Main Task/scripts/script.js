@@ -312,7 +312,6 @@ window.addEventListener('DOMContentLoaded', function(){
     };
 
     //Cost calculator functions
-
     const calculator = (price = 100) => {
         const calcBlock = document.querySelector('.calc-block'),
             calcType = document.querySelector('.calc-type'),
@@ -355,6 +354,8 @@ window.addEventListener('DOMContentLoaded', function(){
                 total = Math.floor(price * typeValue * squareValue * countValue * dayValue);
                 totalAnimate(total);
             }
+
+            totalValue.textContent = total;
         };
 
         calcBlock.addEventListener('change', (event) => {
