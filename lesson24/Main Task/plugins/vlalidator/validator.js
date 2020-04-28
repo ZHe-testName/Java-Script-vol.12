@@ -57,6 +57,13 @@ class Validator{
         if(this.isValid(target)){
             this.showSuccess(target);
             this.errors.delete(target);
+        }else if(target.value === ''){
+            target.classList.remove('success');
+            target.classList.remove('error');
+
+            if(target.nextElementSibling && target.nextElementSibling.classList.contains('validator-error')){
+                target.nextElementSibling.remove();
+            }
         }else{
             this.showError(target);
             this.errors.add(target);
@@ -67,7 +74,7 @@ class Validator{
         elem.classList.remove('success');
         elem.classList.add('error');
 
-        if(elem.nextElementSibling){
+        if(elem.nextElementSibling && elem.nextElementSibling.classList.contains('validator-error')){
             return;
         }
 
@@ -82,7 +89,7 @@ class Validator{
         elem.classList.remove('error');
         elem.classList.add('success');
 
-        if(elem.nextElementSibling){
+        if(elem.nextElementSibling && elem.nextElementSibling.classList.contains('validator-error')){
             elem.nextElementSibling.remove();
         }
     }
@@ -97,7 +104,7 @@ class Validator{
         }
 
         if(!this.pattern.text){
-            this.pattern.text = /^[а-я]$/;
+            this.pattern.text = /[а-я]/i;
         }
     }
 };
