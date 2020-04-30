@@ -16,37 +16,71 @@ class Sender{
             event.preventDefault();
 
             this.form.appendChild(this.statusMessage);
-
-            this.request = new XMLHttpRequest();
-
-            this.request.addEventListener('readystatechange', () => {
-                this.statusMessage.textContent = this.loadingMessage;
-
-                if(this.request.readyState !==4){
-                    return;
-                }
-
-                if(this.request.status === 200){
-                    this.statusMessage.textContent = this.successMessage;
-                }else{
-                    this.statusMessage.textContent = this.errorMessage;
-                    console.error(this.request.status);
-                }
-            });
-
-            this.request.open('POST', './server.php');
-            this.request.setRequestHeader('Content-Type', 'aplication/json');
-
+            this.statusMessage.textContent = this.loadingMessage;
             this.formData = new FormData(this.form);
 
             this.body = {};
 
             this.formData.forEach((val, key) => {
                 this.body[key] = val;
-            })
-            
-            this.request.send(JSON.stringify(this.body));
+            });
+
+            this.postData(this.body, () => {
+                this.statusMessage.textContent = this.successMessage;
+                this.clearInputs();
+            }, (error) => {
+                this.statusMessage.textContent = this.errorMessage;
+                this.clearInputs();
+                console.error(error);
+            });
 
         });
+
+        this.form.addEventListener('input', (enent) => {
+            this.target = event.target;
+
+            if(this.target.name === 'user_phone'){
+                this.numsValidator(this.target);
+            }
+        })
+
+        this.postData = (body, outputData, errorData) => {
+            this.request = new XMLHttpRequest();
+
+            this.request.addEventListener('readystatechange', () => {
+
+                if(this.request.readyState !==4){
+                    return;
+                }
+
+                if(this.request.status === 200){
+                    outputData();
+                }else{
+                    errorData(this.request.status);
+                }
+            });
+
+            this.request.open('POST', './server.php');
+            this.request.setRequestHeader('Content-Type', 'aplication/json');
+            
+            this.request.send(JSON.stringify(body));
+        };
+
+        this.clearInputs = () => {
+            this.formElems = this.form.elements;
+
+            for(let elem of this.formElems){
+                if(elem.tagName.toLowerCase() === 'input'){
+                    elem.value = '';
+                }
+            }
+            
+        };
+
+        this.numsValidator = (target) => {
+            this.value = target.value;
+            console.log(this.value);
+            target.value = this.value.replace(/\D/, '');
+        };
     };
 }
