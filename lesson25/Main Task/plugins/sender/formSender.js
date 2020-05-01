@@ -33,7 +33,7 @@ class Sender{
                 this.statusMessage.innerHTML = `<p>${this.successMessage}</p>`;
                 this.clearInputs();
             }, (error) => {
-                this.statusMessage.textContent = `<p>${this.errorMessage}</p>`;
+                this.statusMessage.innerHTML = `<p>${this.errorMessage}</p>`;
                 this.clearInputs();
                 console.error(error);
             });
