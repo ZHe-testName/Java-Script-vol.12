@@ -36,11 +36,13 @@ class Sender{
 
         });
 
-        this.form.addEventListener('input', (enent) => {
+        this.form.addEventListener('input', (event) => {
             this.target = event.target;
 
             if(this.target.name === 'user_phone'){
                 this.numsValidator(this.target);
+            }else if(this.target.name === 'user_name' || this.target.name === 'user_message'){
+                this.wordsValidator(this.target);
             }
         })
 
@@ -80,7 +82,13 @@ class Sender{
         this.numsValidator = (target) => {
             this.value = target.value;
             console.log(this.value);
-            target.value = this.value.replace(/\D/, '');
+            target.value = this.value.replace(/[^+\d]/, '');
         };
+
+        this.wordsValidator = (target) => {
+            this.val = target.value;
+            console.log(this.val);
+            target.value = this.val.replace(/[^а-я\s\.]/, '');
+        }
     };
 }
