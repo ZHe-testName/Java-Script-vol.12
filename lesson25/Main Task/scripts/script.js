@@ -367,56 +367,7 @@ console.log(squareValue);
         });
     };
 
-    //Send AJAX reqest form
-
-    // const sendForm = () => {
-    //     const errorMessage = 'Что-то пошло не так...',
-    //         loadingMessage = 'Загрузочка...',
-    //         successMessage = 'Спасибо! Мы скоро с Вами свяжемся.';
-
-    //     const mainForm = document.getElementById('form1');
-
-    //     const statusMessage = document.createElement('div');
-    //     statusMessage.style.cssText = 'font-size: 21px;';
-
-    //     mainForm.addEventListener('submit', (event) => {
-    //         event.preventDefault();
-
-    //         mainForm.appendChild(statusMessage);
-
-    //         const request = new XMLHttpRequest();
-
-    //         request.addEventListener('readystatechange', () => {
-    //             statusMessage.textContent = loadingMessage;
-
-    //             if(request.readyState !==4){
-    //                 return;
-    //             }
-
-    //             if(request.status === 200){
-    //                 statusMessage.textContent = successMessage;
-    //             }else{
-    //                 statusMessage.textContent = errorMessage;
-    //                 console.error(request.status);
-    //             }
-    //         });
-
-    //         request.open('POST', './server.php');
-    //         request.setRequestHeader('Content-Type', 'aplication/json');
-
-    //         const formData = new FormData(mainForm);
-
-    //         let body = {};
-
-    //         formData.forEach((val, key) => {
-    //             body[key] = val;
-    //         })
-            
-    //         request.send(JSON.stringify(body));
-
-    //     });
-        
-    // };
+    //Send AJAX reqest form in plugins repositories
 
     timeToMidnightCounter();
     toggleMenu();

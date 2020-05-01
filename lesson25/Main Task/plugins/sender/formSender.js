@@ -4,11 +4,10 @@ class Sender{
     constructor(selector){
         this.form = document.querySelector(selector);
         this.errorMessage = 'Что-то пошло не так...';
-        this.loadingMessage = 'Загрузочка...';
         this.successMessage = 'Спасибо! Мы скоро с Вами свяжемся.';
+
         this.statusMessage = document.createElement('div');
-        this.statusMessage.style.cssText = `font-size: 21px;
-                                            color: white;`;
+        this.statusMessage.classList.add('preloader-wrap');
     }
 
     init(){
@@ -16,7 +15,12 @@ class Sender{
             event.preventDefault();
 
             this.form.appendChild(this.statusMessage);
-            this.statusMessage.textContent = this.loadingMessage;
+            this.statusMessage.innerHTML = `<div class="load-container">
+                                                <div class="dash uno"></div>
+                                                <div class="dash dos"></div>
+                                                <div class="dash tres"></div>
+                                                <div class="dash cuatro"></div>
+                                            </div>`;
             this.formData = new FormData(this.form);
 
             this.body = {};
@@ -26,10 +30,10 @@ class Sender{
             });
 
             this.postData(this.body, () => {
-                this.statusMessage.textContent = this.successMessage;
+                this.statusMessage.innerHTML = `<p>${this.successMessage}</p>`;
                 this.clearInputs();
             }, (error) => {
-                this.statusMessage.textContent = this.errorMessage;
+                this.statusMessage.textContent = `<p>${this.errorMessage}</p>`;
                 this.clearInputs();
                 console.error(error);
             });
