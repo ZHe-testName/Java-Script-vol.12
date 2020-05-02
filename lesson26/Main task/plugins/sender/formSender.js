@@ -30,8 +30,14 @@ class Sender{
             });
 
             this.postData(this.body)
-                .then(this.showResMessage(this.successMessage))
-                .catch(this.showResMessage(this.errorMessage));
+                .then(succsess => {
+                    this.showResMessage(this.successMessage);
+                    console.log(succsess);
+                })
+                .catch(error => {
+                    this.showResMessage(this.errorMessage);
+                    console.error(error);
+                });
         });
 
         this.form.addEventListener('input', (event) => {
@@ -51,15 +57,15 @@ class Sender{
 
                 this.request.addEventListener('readystatechange', () => {
 
-                    if(this.request.readyState !==4){
+                    if(this.request.readyState !== 4){
                         return;
                     }
 
                     if(this.request.status === 200){
-                        const response = JSON.parse(this.request.statusText);
-                        resolve(response);
+                        this.response = this.request;
+                        resolve(this.response);
                     }else{
-                        reject(this.request.status);
+                        reject(this.request.statusText);
                     }
                 });
 
@@ -88,13 +94,11 @@ class Sender{
 
         this.numsValidator = (target) => {
             this.value = target.value;
-            console.log(this.value);
             target.value = this.value.replace(/[^+\d]/, '');
         };
 
         this.wordsValidator = (target) => {
             this.val = target.value;
-            console.log(this.val);
             target.value = this.val.replace(/[^а-я\s\.]/, '');
         }
     };
