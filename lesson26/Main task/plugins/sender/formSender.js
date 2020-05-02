@@ -29,15 +29,9 @@ class Sender{
                 this.body[key] = val;
             });
 
-            this.postData(this.body, () => {
-                this.statusMessage.innerHTML = `<p>${this.successMessage}</p>`;
-                this.clearInputs();
-            }, (error) => {
-                this.statusMessage.innerHTML = `<p>${this.errorMessage}</p>`;
-                this.clearInputs();
-                console.error(error);
-            });
-
+            this.postData(this.body)
+                .then(this.showResMessage(this.successMessage))
+                .catch(this.showResMessage(this.errorMessage));
         });
 
         this.form.addEventListener('input', (event) => {
@@ -50,26 +44,35 @@ class Sender{
             }
         })
 
-        this.postData = (body, outputData, errorData) => {
-            this.request = new XMLHttpRequest();
+        this.postData = (body) => {
 
-            this.request.addEventListener('readystatechange', () => {
+            return new Promise((resolve, reject) => {
+                this.request = new XMLHttpRequest();
 
-                if(this.request.readyState !==4){
-                    return;
-                }
+                this.request.addEventListener('readystatechange', () => {
 
-                if(this.request.status === 200){
-                    outputData();
-                }else{
-                    errorData(this.request.status);
-                }
+                    if(this.request.readyState !==4){
+                        return;
+                    }
+
+                    if(this.request.status === 200){
+                        const response = JSON.parse(this.request.statusText);
+                        resolve(response);
+                    }else{
+                        reject(this.request.status);
+                    }
+                });
+
+                this.request.open('POST', './server.php');
+                this.request.setRequestHeader('Content-Type', 'aplication/json');
+                
+                this.request.send(JSON.stringify(body));
             });
+        };
 
-            this.request.open('POST', './server.php');
-            this.request.setRequestHeader('Content-Type', 'aplication/json');
-            
-            this.request.send(JSON.stringify(body));
+        this.showResMessage = (messageTxt) => {
+            this.statusMessage.innerHTML = `<p>${messageTxt}}</p>`;
+            this.clearInputs();
         };
 
         this.clearInputs = () => {
