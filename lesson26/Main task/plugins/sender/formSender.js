@@ -76,7 +76,7 @@ class Sender{
         };
 
         this.showResMessage = (messageTxt) => {
-            this.statusMessage.innerHTML = `<p>${messageTxt}}</p>`;
+            this.statusMessage.innerHTML = `<p>${messageTxt}</p>`;
             this.clearInputs();
         };
 
