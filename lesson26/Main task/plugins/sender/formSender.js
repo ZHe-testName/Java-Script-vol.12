@@ -62,8 +62,7 @@ class Sender{
                     }
 
                     if(this.request.status === 200){
-                        this.response = this.request;
-                        resolve(this.response);
+                        resolve(this.request);
                     }else{
                         reject(this.request.statusText);
                     }
