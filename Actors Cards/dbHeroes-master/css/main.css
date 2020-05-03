@@ -6,6 +6,8 @@ body{
     background-image: url(../icons/cinema_1.jpg);
 }
 
+/* header */
+
 header{
     display: flex;
     align-items: center;
@@ -29,12 +31,80 @@ h1{
     background-image: url(../icons/imgonline-com-ua-Transparent-backgr-JmPSd2uURj2D.png);
     background-size: cover;
     background-position: center;
+    background-color: rgb(146, 146, 146);
     border-left: 2px solid black;
-    box-shadow: -6px 0 5px 2px rgba(0, 0, 0, 0.644);
+    border-right: 2px solid black;
+    box-shadow: -3px 0 3px 1px  rgba(163, 163, 163, 0.726);
 }
 
 .h1wrap{
     flex-basis:65%;
     border-bottom: 2px solid black;
-    border-left: 2px solid black;
+    /* border-left: 2px solid black; */
+}
+
+/* menu */
+
+.menu{
+    display: flex;
+    justify-content: space-between;
+    background-color: rgba(133, 133, 133, 0.747);
+    /* background-color: rgba(170, 168, 168, 0.932); */
+    max-width: 350px;
+    border: 2px solid black;
+}
+
+.menu-list{
+    list-style-type: none;
+    padding: 20px 20px;
+    margin: 0;
+}
+
+.menu-items{
+    padding: 0 10px;
+}
+
+.menu-items button{
+    min-width: 250px;
+    margin: 2px 0;
+    cursor: pointer;
+    border: 1px solid rgb(2, 2, 2);
+    outline: none;
+    background-color: rgb(235, 230, 230);
+    font-weight: bold;
+}
+
+.menu-items button:hover{
+    background-color: rgb(185, 185, 185);
+    box-shadow: 0 0 5px 1px black;
+    font-size: 16px;
+}
+
+.close-button{
+    min-width: 30px;
+    background-color: rgb(206, 202, 202);
+    border: 1px solid black;
+    cursor: pointer;
+    outline: none;
+    margin: 0;
+    padding: 0;
+}
+
+.arrow{
+    border: solid black;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+    transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
+}
+
+.right {
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+}
+
+.left {
+    transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
 }
