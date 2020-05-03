@@ -16,7 +16,7 @@ window.addEventListener('DOMContentLoaded', () => {
                     const response = JSON.parse(request.responseText);
                     resolve(response);
                 }else{
-                    reject('Error happend!');
+                    reject('Error! Something wrong.');
                 }
             });
 

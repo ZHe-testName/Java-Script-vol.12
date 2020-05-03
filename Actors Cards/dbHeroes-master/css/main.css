@@ -30,6 +30,7 @@ h1{
     background-size: cover;
     background-position: center;
     border-left: 2px solid black;
+    box-shadow: -6px 0 5px 2px rgba(0, 0, 0, 0.644);
 }
 
 .h1wrap{
