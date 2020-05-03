@@ -49,9 +49,17 @@ h1{
     display: flex;
     justify-content: space-between;
     background-color: rgba(133, 133, 133, 0.747);
-    /* background-color: rgba(170, 168, 168, 0.932); */
     max-width: 350px;
     border: 2px solid black;
+    transition: 1.8s;
+    transform: translateX(-90%);
+    transition-timing-function: cubic-bezier(0.72, -1.03, 0, 2.88);
+}
+
+.active{
+    transform: translateX(0%);
+    transition: 1s;
+    transition-timing-function: ease-in;
 }
 
 .menu-list{
@@ -81,7 +89,7 @@ h1{
 }
 
 .close-button{
-    min-width: 30px;
+    min-width: 35px;
     background-color: rgb(206, 202, 202);
     border: 1px solid black;
     cursor: pointer;
@@ -95,16 +103,15 @@ h1{
     border-width: 0 3px 3px 0;
     display: inline-block;
     padding: 3px;
-    transform: rotate(135deg);
-    -webkit-transform: rotate(135deg);
+    transform: rotate(-765deg);
+    -webkit-transform: rotate(-765deg);
+    transition: 2.7s;
+    transition-timing-function: cubic-bezier(1,.21,.65,1.95)
 }
 
-.right {
-    transform: rotate(-45deg);
-    -webkit-transform: rotate(-45deg);
-}
 
 .left {
     transform: rotate(135deg);
     -webkit-transform: rotate(135deg);
+    transition: 1.3s;
 }

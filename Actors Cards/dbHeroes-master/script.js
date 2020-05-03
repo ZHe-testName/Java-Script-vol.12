@@ -1,6 +1,13 @@
 'use strict';
 
 window.addEventListener('DOMContentLoaded', () => {
+    const menu = document.querySelector('.menu'),
+        menuList = document.querySelector('.menu-list'),
+        openCloseBtn = document.querySelector('.close-button'),
+        arrow = document.querySelector('.arrow');
+
+    let showArr = [];
+
     const getData = () => {
         return new Promise ((resolve, reject) => {
             const request = new XMLHttpRequest();
@@ -24,21 +31,35 @@ window.addEventListener('DOMContentLoaded', () => {
         })
     };
 
-    const heroObj = getData();
+    openCloseBtn.addEventListener('click', () => {
+        menu.classList.toggle('active');
+        arrow.classList.toggle('left');
+    });
 
-    let set = new Set;
-    
-    heroObj
-        .then(arr => {
-            arr.forEach(item => {
-                    if(item.movies){
-                        item.movies.forEach(elem => {
-                            set.add(elem);
-                        })
-                    }
+    menuList.addEventListener('click', (event) => {
+        let target = event.target;
+        showArr = [];
+
+        if(target.classList.contains('button')){
+            let film = target.textContent;
+            const heroObj = getData();
+            
+            heroObj
+                .then(array => {
+                    array.forEach(item => {
+                        if(item.movies){
+                            item.movies.forEach(elem => {
+                                if(elem === film){
+                                    showArr.push(item);
+                                }
+                            })
+                        }
+                    });
+            
+                    console.log(showArr);
                 })
-            })
-        .then(console.log(set))
-        .catch(error => console.error(error));
+                .catch(error => console.error(error));
+        }
+    })
 
 });
