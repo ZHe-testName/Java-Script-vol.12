@@ -39,8 +39,17 @@ h1{
     background-color: rgb(146, 146, 146);
     border-left: 2px solid black;
     border-right: 2px solid black;
-    box-shadow: -3px 0 3px 1px  rgba(83, 83, 83, 0.842);
     overflow: hidden;
+}
+
+header:hover .header-img{
+    box-shadow: inset 0 0 8px 1px rgb(27, 27, 27), inset 0 0 17px 3px rgb(48, 47, 47);
+    transition: 0s 1.2s;
+}
+
+header:hover .line{
+    left: -87%;
+    transition: 1.3s;
 }
 
 .h1wrap{
@@ -52,18 +61,13 @@ h1{
     /* border-left: 2px solid black; */
 }
 
-.h1wrap:hover .line{
-    left: -87%;
-    transition: 1.3s;
-}
-
 .line{
     position: absolute;
     display: block;
     left: 102%;
     width: 70%;
     height: 3px;
-    box-shadow: 0 4px 10px 2px black;
+    box-shadow: 0 4px 10px 3px black;
 }
 
 /* main-field */
@@ -158,7 +162,9 @@ h1{
     min-width: 96%;
     height:900px;
     background-color: rgba(161, 161, 161, 0.685);
-    border-left: 2px solid rgba(41, 40, 40, 0.856);
+    border-left: 2px solid rgba(201, 201, 201, 0.856);
+    border-right: 2px solid rgba(201, 201, 201, 0.856);
+    border-bottom: 2px solid rgba(201, 201, 201, 0.856);
 }
 
 .header-section{
