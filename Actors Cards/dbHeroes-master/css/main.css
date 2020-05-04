@@ -4,6 +4,7 @@ body{
     background-attachment: fixed;
     background-size: cover;
     background-image: url(../icons/cinema_1.jpg);
+    overflow-x: hidden;
 }
 
 /* header */
@@ -25,6 +26,10 @@ h1{
 }
 
 .header-img{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     height: 150px;
     width: 350px;
     flex-basis: 23%;
@@ -34,22 +39,53 @@ h1{
     background-color: rgb(146, 146, 146);
     border-left: 2px solid black;
     border-right: 2px solid black;
-    box-shadow: -3px 0 3px 1px  rgba(163, 163, 163, 0.726);
+    box-shadow: -3px 0 3px 1px  rgba(83, 83, 83, 0.842);
+    overflow: hidden;
 }
 
 .h1wrap{
+    position: relative;
+    display: inline-block;
     flex-basis:65%;
     border-bottom: 2px solid black;
+    overflow: hidden;
     /* border-left: 2px solid black; */
 }
+
+.h1wrap:hover .line{
+    left: -87%;
+    transition: 1.3s;
+}
+
+.line{
+    position: absolute;
+    display: block;
+    left: 102%;
+    width: 70%;
+    height: 3px;
+    box-shadow: 0 4px 10px 2px black;
+}
+
+/* main */
+
+main{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+}
+
 
 /* menu */
 
 .menu{
+    position: sticky;
+    top: 0;
+    flex-grow: 10%;
     display: flex;
     justify-content: space-between;
     background-color: rgba(133, 133, 133, 0.747);
     max-width: 350px;
+    max-height: 620px;
     border: 2px solid black;
     transition: 1.8s;
     transform: translateX(-90%);
@@ -114,4 +150,13 @@ h1{
     transform: rotate(135deg);
     -webkit-transform: rotate(135deg);
     transition: 1.3s;
+}
+
+/* main-section */
+
+section{
+    flex-grow: 90%;
+    width: 1170px;
+    height: 800px;
+    background-color: rgba(255, 255, 255, 0.74);
 }
