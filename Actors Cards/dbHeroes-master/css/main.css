@@ -213,6 +213,7 @@ section{
 }
 
 .hero-card{
+    visibility: hidden;
     cursor: pointer;
     padding-left: 7px;
     padding-right: 7px;

@@ -48,6 +48,24 @@ window.addEventListener('DOMContentLoaded', () => {
         })
     };
 
+    const showImgs = () => {
+        const renderedImgs = document.querySelectorAll('.hero-card');
+
+        let i = 0;
+
+        setTimeout(() => {
+            let intervalIndx = setInterval(() => {
+                if(i < renderedImgs.length){
+                    renderedImgs[i].style.visibility = 'visible';
+                    i++;
+                }else if(i === renderedImgs.length){
+                    clearInterval(intervalIndx);
+                }
+            }, 150);
+        }, 2000);
+
+    };
+
     openCloseBtn.addEventListener('click', () => {
         menu.classList.toggle('active');
         arrow.classList.toggle('left');
@@ -61,6 +79,9 @@ window.addEventListener('DOMContentLoaded', () => {
             let film = target.textContent;
             const heroObj = getData();
             const filmTitle = document.querySelector('.film-title');
+
+            menu.classList.toggle('active');
+            arrow.classList.toggle('left');
             
             heroObj
                 .then(array => {
@@ -77,6 +98,7 @@ window.addEventListener('DOMContentLoaded', () => {
                     return showArr;
                 })
                 .then(imagesRender)
+                .then(showImgs)
                 .catch(error => console.error(error));
 
             filmTitle.textContent = film;
