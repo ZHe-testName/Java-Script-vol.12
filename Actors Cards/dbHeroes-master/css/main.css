@@ -1,3 +1,12 @@
+@keyframes spin-shield{
+    from{
+        transform: rotate(0deg);
+    }
+    to{
+        transform: rotate(360deg);
+    }
+}
+
 body{
     margin: 0;
     padding: 0;
@@ -5,6 +14,7 @@ body{
     background-size: cover;
     background-image: url(../icons/cinema_1.jpg);
     overflow-x: hidden;
+    font-family: 'Varela', sans-serif;
 }
 
 /* header */
@@ -20,7 +30,7 @@ header{
 h1{
     font-size: 55px;
     color: rgb(54, 54, 54);
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    /* font-family: Verdana, Geneva, Tahoma, sans-serif; */
     margin-left: 24%;
     margin-bottom: 0;
 }
@@ -137,6 +147,12 @@ header:hover .line{
     padding: 0;
 }
 
+.close-button:hover{
+    transition: .3s;
+    background-color: rgb(165, 162, 162);
+    box-shadow: inset 0 0 8px 1px white;
+}
+
 .arrow{
     border: solid black;
     border-width: 0 3px 3px 0;
@@ -201,6 +217,10 @@ section{
     background-position: center;
     background-size: cover;
     background-image: url(../icons/treansCapSheeld.png);
+    animation-name: spin-shield;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
 }
 
 /* pictures-section */
@@ -234,6 +254,7 @@ section{
 
 .hero-card:hover .hero-img{
     transition-delay: .5s;
+    transition-duration: .5s;
     box-shadow: 0 0 8px 1px white;
 }
 
@@ -256,7 +277,7 @@ section{
     font-size: 1.4em;
     padding-top: 2px;
     padding-bottom: 2px;
-    text-shadow: 5px 5px 8px rgb(31, 31, 31);
+    text-shadow: 0px 0px 8px rgb(31, 31, 31);
 }
 
 /* .other-info{
