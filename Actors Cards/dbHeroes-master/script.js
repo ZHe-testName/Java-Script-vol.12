@@ -31,6 +31,23 @@ window.addEventListener('DOMContentLoaded', () => {
         })
     };
 
+    const imagesRender = (arr) => {
+        const imgsField = document.querySelector('.pictures-section');
+            
+        imgsField.innerHTML = '';
+
+        arr.forEach(elem => {
+            const div = document.createElement('div');
+            div.classList.add('hero-card');
+            div.innerHTML = `<div class="hero-img" style="background-image: url(./${elem.photo});"></div>
+                            <div class="hero-about">
+                                <h3>${elem.name}</h3>
+                            </div>`;
+            
+            imgsField.appendChild(div);
+        })
+    };
+
     openCloseBtn.addEventListener('click', () => {
         menu.classList.toggle('active');
         arrow.classList.toggle('left');
@@ -43,6 +60,7 @@ window.addEventListener('DOMContentLoaded', () => {
         if(target.classList.contains('button')){
             let film = target.textContent;
             const heroObj = getData();
+            const filmTitle = document.querySelector('.film-title');
             
             heroObj
                 .then(array => {
@@ -56,9 +74,12 @@ window.addEventListener('DOMContentLoaded', () => {
                         }
                     });
             
-                    console.log(showArr);
+                    return showArr;
                 })
+                .then(imagesRender)
                 .catch(error => console.error(error));
+
+            filmTitle.textContent = film;
         }
     })
 
