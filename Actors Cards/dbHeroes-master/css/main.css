@@ -73,6 +73,7 @@ header:hover .line{
 /* main-field */
 
 .main-field{
+    position: relative;
     display: flex;
     margin-top: 1px;
 }
@@ -156,10 +157,14 @@ header:hover .line{
 
 /* main-section */
 
+section{
+    position: relative;
+    left: -20%;
+    margin-top: -12px;
+}
+
 .main-section{
-    position: absolute;
-    left: 3%;
-    min-width: 96%;
+    min-width: 1460px;
     height:900px;
     background-color: rgba(161, 161, 161, 0.685);
     border-left: 2px solid rgba(201, 201, 201, 0.856);
@@ -168,6 +173,8 @@ header:hover .line{
 }
 
 .header-section{
+    position: sticky;
+    top: 10px;
     display: flex;
     justify-content: space-around;
     align-items: center;
