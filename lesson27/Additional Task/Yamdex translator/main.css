@@ -1,0 +1,18 @@
+.main-field{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 10%;
+}
+
+.input-output-block{
+    display: flex;
+    justify-content: space-between;
+}
+
+.output-field{
+    height: 30px;
+    width: 160px;
+    border: 1px solid black;
+}
