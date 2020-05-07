@@ -8,4 +8,4 @@ const footerFormSender = new Sender('#form2');
 
 const popUpFormSender = new Sender('#form3');
 
-export default {mainFormSender, footerFormSender, popUpFormSender};
+export {mainFormSender, footerFormSender, popUpFormSender};

@@ -9,7 +9,7 @@ import slider from './modules/slider';
 import changeImg from './modules/changeImg';
 import calcValidator from './modules/calcValidator';
 import calculator from './modules/calculator';
-import * as formsendeObj from './modules/sendForms';
+import * as formSendersObj from './modules/sendForms';
 
 //Timer to midnight
 timeToMidnightCounter();
@@ -31,6 +31,6 @@ calcValidator();
 calculator(100);
 
 //Server AJAX request initializatons
-formsendeObj.mainFormSender.init();
-formsendeObj.footerFormSender.init();
-formsendeObj.popUpFormSender.init();
+formSendersObj.mainFormSender.init();
+formSendersObj.footerFormSender.init();
+formSendersObj.popUpFormSender.init();
