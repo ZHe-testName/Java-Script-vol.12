@@ -1,0 +1,14 @@
+.error{
+    box-shadow: inset 0 0 5px 3px red;
+}
+
+.success{
+    box-shadow: inset 0 0 5px 3px green;
+}
+
+.validator-error{
+    position: relative;
+    top: -30%;
+    color: red;
+    font-size: 14px;
+}
