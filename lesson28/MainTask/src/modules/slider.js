@@ -21,7 +21,7 @@ const slider = () => {
         for(let i = 0; i < (amount + 1); i++){
             let li = document.createElement('li');
             li.classList.add('dot');
-            portfolioDots.append(li);
+            portfolioDots.appendChild(li);
         }
 
         dots = document.querySelectorAll('.dot');

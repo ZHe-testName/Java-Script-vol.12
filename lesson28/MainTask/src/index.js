@@ -1,5 +1,14 @@
 'use strict';
 
+import 'nodelist-foreach-polyfill';
+import '@babel/polyfill';
+import 'es6-promise';
+import 'fetch-polyfill';
+import 'formdata-polyfill';
+import elementClosest from 'element-closest';
+elementClosest(window);
+
+
 import timeToMidnightCounter from './modules/timeToMidnightCounter';
 import toggleMenu from './modules/toggleMenu';
 import togglePopUp from './modules/togglePopUp';

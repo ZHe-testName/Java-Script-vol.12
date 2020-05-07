@@ -21,6 +21,7 @@ class Sender{
                                                 <div class="dash tres"></div>
                                                 <div class="dash cuatro"></div>
                                             </div>`;
+                                            
             this.formData = new FormData(this.form);
 
             this.body = {};
