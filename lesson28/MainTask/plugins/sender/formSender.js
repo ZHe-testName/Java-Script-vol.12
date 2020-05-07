@@ -7,6 +7,7 @@ class Sender{
         this.successMessage = 'Спасибо! Мы скоро с Вами свяжемся.';
 
         this.statusMessage = document.createElement('div');
+        this.inputs = this.form.querySelectorAll('input');
         this.statusMessage.classList.add('preloader-wrap');
     }
 
@@ -21,13 +22,11 @@ class Sender{
                                                 <div class="dash tres"></div>
                                                 <div class="dash cuatro"></div>
                                             </div>`;
-                                            
-            this.formData = new FormData(this.form);
 
             this.body = {};
 
-            this.formData.forEach((val, key) => {
-                this.body[key] = val;
+            this.inputs.forEach(elem => {
+                this.body[elem.name] = elem.value;
             });
 
             this.postData(this.body)
