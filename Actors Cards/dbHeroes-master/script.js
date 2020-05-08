@@ -8,6 +8,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
     let showArr = [];
 
+    //Request method
     const getData = () => {
         return new Promise ((resolve, reject) => {
             const request = new XMLHttpRequest();
@@ -31,23 +32,34 @@ window.addEventListener('DOMContentLoaded', () => {
         })
     };
 
+    //Images loader
     const imagesRender = (arr) => {
         const imgsField = document.querySelector('.pictures-section');
             
         imgsField.innerHTML = '';
 
         arr.forEach(elem => {
-            const div = document.createElement('div');
+            const div = document.createElement('div'),
+                regExp = /^dbimage\/[\w-]*\.(jpg|png)$/;
             div.classList.add('hero-card');
-            div.innerHTML = `<div class="hero-img" style="background-image: url(./${elem.photo});"></div>
+
+            if(regExp.test(elem.photo)){
+                div.innerHTML = `<div class="hero-img" style="background-image: url(./${elem.photo});"></div>
                             <div class="hero-about">
                                 <h3>${elem.name}</h3>
                             </div>`;
+            }else{
+                div.innerHTML = `<div class="hero-img"><img src="./icons/emoji_face_emoticon_sad_1-512.png"></div>
+                                    <div class="hero-about">
+                                        <h3 style="color: black;">OOPS...File is lost.</h3>
+                                    </div>`;
+            }
             
             imgsField.appendChild(div);
         })
     };
 
+    //Function for showing cards
     const showImgs = () => {
         const renderedImgs = document.querySelectorAll('.hero-card');
 
@@ -66,11 +78,13 @@ window.addEventListener('DOMContentLoaded', () => {
 
     };
 
+    //Open/close menu button
     openCloseBtn.addEventListener('click', () => {
         menu.classList.toggle('active');
         arrow.classList.toggle('left');
     });
 
+    //listener for choosing film
     menuList.addEventListener('click', (event) => {
         let target = event.target;
         showArr = [];

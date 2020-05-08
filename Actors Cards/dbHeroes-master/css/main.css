@@ -248,13 +248,13 @@ section{
 }
 
 .hero-card:hover{
-    transition: 0.9s;
+    transition: .4s;
     background-color: rgba(41, 41, 41, 0.815);
 }
 
 .hero-card:hover .hero-img{
     transition-delay: .5s;
-    transition-duration: .5s;
+    /* transition-duration: .1s; */
     box-shadow: 0 0 8px 1px white;
 }
 
@@ -262,12 +262,19 @@ section{
     width: 95%;
     min-height: 290px;
     margin: auto;
-    background-image: url(../dbimage/Agent_Carter_Season_2_Promo_01.jpg);
+    /* background-image: url(../dbimage/Agent_Carter_Season_2_Promo_01.jpg); */
     background-size: cover;
     background-position: center;
     /* border: 3px solid rgba(122, 122, 122, 0.938); */
     border-radius: 15px;
     /* box-shadow: 0 0 7px 1px rgb(20, 20, 20); */
+}
+
+.hero-img>img{
+    width: 213px;
+    height: 240px;
+    background-size: cover;
+    background-position: center;
 }
 
 .hero-about>h3{
