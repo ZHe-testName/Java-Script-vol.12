@@ -357,7 +357,6 @@ section{
 .slide{
     width: 30%;
     min-height: 100%;
-    background-image: url(../dbimage/AntMan-EndgameProfile.jpg);
     background-position: center;
     background-size: cover;
 }

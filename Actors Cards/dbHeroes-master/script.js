@@ -36,6 +36,8 @@ window.addEventListener('DOMContentLoaded', () => {
     //Images loader
     const imagesRender = (arr) => {
         const imgsField = document.querySelector('.pictures-section');
+
+        let idNum = 0;
             
         imgsField.innerHTML = '';
 
@@ -46,7 +48,7 @@ window.addEventListener('DOMContentLoaded', () => {
             div.classList.add('hero-card');
 
             if(regExp.test(elem.photo)){
-                div.innerHTML = `<div class="hero-img" style="background-image: url(./${elem.photo});"></div>
+                div.innerHTML = `<div class="hero-img" id="${idNum} " style="background-image: url(./${elem.photo});"></div>
                             <div class="hero-about">
                                 <h3>${elem.name}</h3>
                             </div>`;
@@ -58,6 +60,8 @@ window.addEventListener('DOMContentLoaded', () => {
             }
             
             imgsField.appendChild(div);
+
+            idNum++;
         })
 
         return arr;
@@ -85,25 +89,78 @@ window.addEventListener('DOMContentLoaded', () => {
 
     //Slider actions
 
+    const changeSlide = (obj) => {
+        const frame = document.querySelector('.frame');
+
+        frame.innerHTML = ` <div class="full-info">
+                                <div class="name-pseydo">
+                                    <span class="pseydo">${obj.name}</span>
+                                    <span class="name">${obj.realName}</span>
+                                </div>
+                                <div class="slide" style="background-image: url(./${obj.photo});">
+
+                                </div>
+                                <div class="other-info">
+                                    <span class="actor">${obj.actors}</span>
+                                    <div class="dates">
+                                        <span class="birth-day">birthday : ${obj.birthDay ? obj.birthDay : "----"}</span>
+                                        <span class="death-day">deathday : ${obj.deathDay ? obj.deathDay : "----"}</span>
+                                    </div>
+                                    <div class="first-info-block">
+                                        <span class="gender">gender : ${obj.gender ? obj.gender : "----"}</span> 
+                                        <span class="species">species : ${obj.species}</span>
+                                    </div>
+                                    <div class="second-info-block">
+                                        <span class="citizenship">citizenShip : ${obj.citizenship}</span>
+                                        <span class="status">status : ${obj.status}</span> 
+                                    </div>
+                                </div>
+                            </div>
+                                    `;
+        
+     };
+
     const showSlider = (arr) =>{
         const pictureSection = document.querySelector('.pictures-section'),
             coverSlider = document.querySelector('.cover-slider'),
             closeSlider = document.querySelector('.close-slider');
 
+
         pictureSection.addEventListener('click', (event) => {
             let target = event.target;
+            let index = +target.attributes.id.nodeValue;
+            let nextObj;
 
             if(target.classList.contains('wrong')){
                 return;
             }else if(target.classList.contains('hero-img')){
+                nextObj = arr[index];
                 coverSlider.classList.add('show-slider');
-                console.log(arr);
+                changeSlide(nextObj);
             }
+        
+        coverSlider.addEventListener('click', (event) => {
+            let target = event.target;
+                
+            if(target.classList.contains('left-slide') && index > 0){
+                index--;
+                nextObj = arr[index];
+                changeSlide(nextObj);
+                console.log(index);
+                console.log(arr);
+            }else if(target.classList.contains('right-slide') && index < arr.length - 1){
+                index++;
+                nextObj = arr[index];
+                changeSlide(nextObj);
+                console.log(index);
+                console.log(arr);
+            }});
+
         });
 
         closeSlider.addEventListener('click', () => {
             coverSlider.classList.remove('show-slider');
-        })
+        });
     }
 
     //Open/close menu button
@@ -138,7 +195,7 @@ window.addEventListener('DOMContentLoaded', () => {
                             })
                         }
                     });
-            
+                    
                     return showArr;
                 })
                 .then(imagesRender)
