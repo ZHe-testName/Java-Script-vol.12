@@ -120,6 +120,7 @@ window.addEventListener('DOMContentLoaded', () => {
         
      };
 
+     //Slider card initalizator
     const showSlider = (arr) =>{
         const pictureSection = document.querySelector('.pictures-section'),
             coverSlider = document.querySelector('.cover-slider'),
@@ -191,7 +192,7 @@ window.addEventListener('DOMContentLoaded', () => {
         arrow.classList.toggle('left');
     });
 
-    //listener for choosing film
+    //listener for film choosing 
     menuList.addEventListener('click', (event) => {
         let target = event.target;
         showArr = [];
