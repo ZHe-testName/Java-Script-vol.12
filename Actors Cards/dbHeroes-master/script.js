@@ -52,7 +52,7 @@ window.addEventListener('DOMContentLoaded', () => {
                             </div>`;
             }else{
                 div.innerHTML = `<div class="hero-img wrong-img"><img src="./icons/emoji_face_emoticon_sad_1-512.png"></div>
-                                    <div class="hero-about">
+                                    <div class="hero-about wrong">
                                         <h3 style="color: black;">OOPS...File is lost.</h3>
                                     </div>`;
             }
@@ -93,7 +93,9 @@ window.addEventListener('DOMContentLoaded', () => {
         pictureSection.addEventListener('click', (event) => {
             let target = event.target;
 
-            if(target.classList.contains('hero-img')){
+            if(target.classList.contains('wrong')){
+                return;
+            }else if(target.classList.contains('hero-img')){
                 coverSlider.classList.add('show-slider');
                 console.log(arr);
             }
