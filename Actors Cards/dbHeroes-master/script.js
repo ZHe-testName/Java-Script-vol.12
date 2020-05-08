@@ -151,13 +151,13 @@ window.addEventListener('DOMContentLoaded', () => {
                 nextObj = arr[index];
                 changeSlide(nextObj);
             }else if(target.classList.contains('right-slide')){
-                if(index === arr.length){
-                    index = 0;
+                if(index === arr.length - 1){
+                    index = -1;
                 }
                 
+                index++;
                 nextObj = arr[index];
                 changeSlide(nextObj);
-                index++;
             }});
 
         });
