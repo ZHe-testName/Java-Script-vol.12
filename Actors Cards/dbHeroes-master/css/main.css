@@ -294,7 +294,9 @@ section{
 /* slider */
 
 .cover-slider{
-    position: absolute;
+    display: none;
+    position: sticky;
+    bottom: 0;
     top: 0;
     left: 0;
     width: 100%;
@@ -302,6 +304,62 @@ section{
     margin: 0;
     background-color: rgba(0, 0, 255, 0.349);
     z-index: 90;
+}
+
+.show-slider{
+    display: block;
+}
+
+.close-slider{
+    width: 70px;
+    height: 70px;
+    margin-left: 40px;
+    margin-top: 40px;
+    margin-bottom: 0;
+    background-image: url(../icons/Closed.png);
+    background-size: cover;
+    background-position: center;
+    border-radius: 50%;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+.slider{
+    display: flex;
+    justify-content: center;
+    margin-top: 5%;
+}
+
+.frame{
+    width: 750px;
+    height: 350px;
+    background-color: rgb(245, 242, 80);
+}
+
+.full-info{
+    display: flex;
+    min-height: 100%;
+}
+
+.name-pseydo,
+.other-info{
+    display: flex;
+    flex-direction: column;
+    width: 35%;
+}
+
+.other-info>div{
+    display: flex;
+    flex-direction: column;
+}
+
+.slide{
+    width: 30%;
+    min-height: 100%;
+    background-image: url(../dbimage/AntMan-EndgameProfile.jpg);
+    background-position: center;
+    background-size: cover;
 }
 
 /* .other-info{

@@ -40,6 +40,7 @@ window.addEventListener('DOMContentLoaded', () => {
         imgsField.innerHTML = '';
 
         arr.forEach(elem => {
+            
             const div = document.createElement('div'),
                 regExp = /^dbimage\/[\w-]*\.(jpg|png)$/;
             div.classList.add('hero-card');
@@ -58,10 +59,12 @@ window.addEventListener('DOMContentLoaded', () => {
             
             imgsField.appendChild(div);
         })
+
+        return arr;
     };
 
     //Function for showing cards
-    const showImgs = () => {
+    const showImgs = (arr) => {
         const renderedImgs = document.querySelectorAll('.hero-card');
 
         let i = 0;
@@ -77,7 +80,29 @@ window.addEventListener('DOMContentLoaded', () => {
             }, 150);
         }, 2000);
 
+        return arr;
     };
+
+    //Slider actions
+
+    const showSlider = (arr) =>{
+        const pictureSection = document.querySelector('.pictures-section'),
+            coverSlider = document.querySelector('.cover-slider'),
+            closeSlider = document.querySelector('.close-slider');
+
+        pictureSection.addEventListener('click', (event) => {
+            let target = event.target;
+
+            if(target.classList.contains('hero-img')){
+                coverSlider.classList.add('show-slider');
+                console.log(arr);
+            }
+        });
+
+        closeSlider.addEventListener('click', () => {
+            coverSlider.classList.remove('show-slider');
+        })
+    }
 
     //Open/close menu button
     openCloseBtn.addEventListener('click', () => {
@@ -116,6 +141,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 })
                 .then(imagesRender)
                 .then(showImgs)
+                .then(showSlider)
                 .catch(error => console.error(error));
 
             filmTitle.textContent = film;
