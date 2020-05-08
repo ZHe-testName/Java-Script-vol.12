@@ -140,6 +140,8 @@ window.addEventListener('DOMContentLoaded', () => {
             }
         
         coverSlider.addEventListener('click', (event) => {
+            const frame = document.querySelector('.frame');
+
             let target = event.target;
                 
             if(target.classList.contains('left-slide')){
@@ -150,7 +152,14 @@ window.addEventListener('DOMContentLoaded', () => {
                 index--;
                 nextObj = arr[index];
 
-                changeSlide(nextObj);
+                frame.innerHTML = '';
+                frame.classList.add('shoot-frame');
+                
+                setTimeout(() => {
+                    changeSlide(nextObj);
+                    frame.classList.remove('shoot-frame');
+                }, 1700);
+                
             }else if(target.classList.contains('right-slide')){
                 if(index === arr.length - 1){
                     index = -1;
@@ -158,7 +167,15 @@ window.addEventListener('DOMContentLoaded', () => {
                 
                 index++;
                 nextObj = arr[index];
-                changeSlide(nextObj);
+
+                
+                frame.innerHTML = '';
+                frame.classList.add('shoot-frame');
+
+                setTimeout(() => {
+                    changeSlide(nextObj);
+                    frame.classList.remove('shoot-frame');
+                }, 1700);
             }});
 
         });
