@@ -26,7 +26,7 @@ class Sender{
             this.body = {};
 
             this.inputs.forEach(elem => {
-                this.body[elem.name] = elem.value;
+                this.body[`"${elem.name}"`] = elem.value;
             });
 
             this.postData(this.body)
@@ -59,7 +59,8 @@ class Sender{
             return fetch('./server.php', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'aplication/json'
+                    'Content-Type': 'aplication/json',
+                    'Accept': 'application/json',
                 },
                 body: JSON.stringify(body),
             });
