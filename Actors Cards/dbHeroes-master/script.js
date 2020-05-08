@@ -142,18 +142,22 @@ window.addEventListener('DOMContentLoaded', () => {
         coverSlider.addEventListener('click', (event) => {
             let target = event.target;
                 
-            if(target.classList.contains('left-slide') && index > 0){
+            if(target.classList.contains('left-slide')){
+                if(index === 0){
+                    index = arr.length;
+                }
+
                 index--;
                 nextObj = arr[index];
                 changeSlide(nextObj);
-                console.log(index);
-                console.log(arr);
-            }else if(target.classList.contains('right-slide') && index < arr.length - 1){
-                index++;
+            }else if(target.classList.contains('right-slide')){
+                if(index === arr.length){
+                    index = 0;
+                }
+                
                 nextObj = arr[index];
                 changeSlide(nextObj);
-                console.log(index);
-                console.log(arr);
+                index++;
             }});
 
         });
