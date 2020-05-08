@@ -95,13 +95,13 @@ window.addEventListener('DOMContentLoaded', () => {
         frame.innerHTML = ` <div class="full-info">
                                 <div class="name-pseydo">
                                     <span class="pseydo">${obj.name}</span>
-                                    <span class="name">${obj.realName}</span>
+                                    <span class="name">name : ${obj.realName ? obj.realName : '----'}</span>
                                 </div>
                                 <div class="slide" style="background-image: url(./${obj.photo});">
 
                                 </div>
                                 <div class="other-info">
-                                    <span class="actor">${obj.actors}</span>
+                                    <span class="actor">real name: ${obj.actors}</span>
                                     <div class="dates">
                                         <span class="birth-day">birthday : ${obj.birthDay ? obj.birthDay : "----"}</span>
                                         <span class="death-day">deathday : ${obj.deathDay ? obj.deathDay : "----"}</span>
@@ -149,6 +149,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
                 index--;
                 nextObj = arr[index];
+
                 changeSlide(nextObj);
             }else if(target.classList.contains('right-slide')){
                 if(index === arr.length - 1){
