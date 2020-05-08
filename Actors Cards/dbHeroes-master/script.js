@@ -4,7 +4,8 @@ window.addEventListener('DOMContentLoaded', () => {
     const menu = document.querySelector('.menu'),
         menuList = document.querySelector('.menu-list'),
         openCloseBtn = document.querySelector('.close-button'),
-        arrow = document.querySelector('.arrow');
+        arrow = document.querySelector('.arrow'),
+        mainSectoin = document.querySelector('.main-section');
 
     let showArr = [];
 
@@ -49,7 +50,7 @@ window.addEventListener('DOMContentLoaded', () => {
                                 <h3>${elem.name}</h3>
                             </div>`;
             }else{
-                div.innerHTML = `<div class="hero-img"><img src="./icons/emoji_face_emoticon_sad_1-512.png"></div>
+                div.innerHTML = `<div class="hero-img wrong-img"><img src="./icons/emoji_face_emoticon_sad_1-512.png"></div>
                                     <div class="hero-about">
                                         <h3 style="color: black;">OOPS...File is lost.</h3>
                                     </div>`;
@@ -90,7 +91,9 @@ window.addEventListener('DOMContentLoaded', () => {
         showArr = [];
 
         if(target.classList.contains('button')){
+            mainSectoin.classList.remove('main-active');
             let film = target.textContent;
+            
             const heroObj = getData();
             const filmTitle = document.querySelector('.film-title');
 
@@ -116,6 +119,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 .catch(error => console.error(error));
 
             filmTitle.textContent = film;
+            mainSectoin.classList.add('main-active');
         }
     })
 
