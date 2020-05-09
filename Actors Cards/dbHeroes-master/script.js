@@ -44,7 +44,7 @@ window.addEventListener('DOMContentLoaded', () => {
         arr.forEach(elem => {
             
             const div = document.createElement('div'),
-                regExp = /^dbimage\/[\w-]*\.(jpg|png)$/;
+                regExp = /^dbimage\/[\w-%]*\.(jpg|png)$/;
             div.classList.add('hero-card');
 
             if(regExp.test(elem.photo)){
