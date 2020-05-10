@@ -49,7 +49,6 @@ window.addEventListener('DOMContentLoaded', () => {
     
     const response = fetch('http://localhost:3000/RU');
 
-
     response
         .then(response => {
             if(response.ok && response.status === 200){
@@ -60,7 +59,10 @@ window.addEventListener('DOMContentLoaded', () => {
         })
         .then(array => {
             countryChartRender(array);
+
+            return array;
         })
+        .then(console.log)
         .catch(error => console.error(error));
 
 });
