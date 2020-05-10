@@ -201,10 +201,11 @@ section{
     position: relative;
     left: -20%;
     margin-top: -12px;
+    width: 100%;
 }
 
 .main-section{
-    min-width: 1450px;
+    width: 123%;
     height: 15%;
     background-color: rgba(161, 161, 161, 0.685);
     border-left: 2px solid rgba(201, 201, 201, 0.856);
