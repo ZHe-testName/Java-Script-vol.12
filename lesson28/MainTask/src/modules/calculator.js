@@ -40,15 +40,14 @@ const calculator = (price = 100) => {
             total = Math.floor(price * typeValue * squareValue * countValue * dayValue);
             totalAnimate(total);
         }
-console.log(total);
+
         totalValue.textContent = total;
     };
 
     calcBlock.addEventListener('input', (event) => {
         let target = event.target;
-        console.dir(target);
+        
         if(target.tagName.toLowerCase() === 'select' || target.tagName.toLowerCase() === 'input'){
-            console.log('hi');
             countSum();
         }
     });

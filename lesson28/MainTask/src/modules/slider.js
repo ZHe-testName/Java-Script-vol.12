@@ -29,6 +29,7 @@ const slider = () => {
 
     const autoPlaySlide = () => {
         hideSlide(slides, curentSlide, 'portfolio-item-active');
+        hideSlide(dots, curentSlide, 'dot-active');
 
         curentSlide++;
         
@@ -36,7 +37,7 @@ const slider = () => {
             curentSlide = 0;
         }
 
-        dotsRender(curentSlide);
+        // dotsRender(curentSlide);
         showSlide(slides, curentSlide, 'portfolio-item-active');
         showSlide(dots, curentSlide, 'dot-active');
     };
@@ -50,7 +51,7 @@ const slider = () => {
     };
 
     startSlide();
-    dotsRender(curentSlide);
+    dotsRender(slides.length - 1);
     showSlide(dots, curentSlide, 'dot-active');
 
     slider.addEventListener('click', (event) => {
@@ -64,6 +65,7 @@ const slider = () => {
         }
 
         hideSlide(slides, curentSlide, 'portfolio-item-active');
+        hideSlide(dots, curentSlide, 'dot-active');
 
         if(target.matches('#arrow-left')){
             curentSlide--;
@@ -83,7 +85,7 @@ const slider = () => {
             curentSlide = slides.length -1;
         }
 
-        dotsRender(curentSlide);
+        // dotsRender(curentSlide);
         showSlide(slides, curentSlide, 'portfolio-item-active');
         showSlide(dots, curentSlide, 'dot-active');
        
