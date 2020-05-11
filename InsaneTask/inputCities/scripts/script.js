@@ -5,9 +5,9 @@ window.addEventListener('DOMContentLoaded', () => {
     const input = document.getElementById('select-cities'),
         dropDownList = document.querySelector('.dropdown-lists__col'),
         chooseCountryList = document.querySelector('.dropdown-lists__countryBlock'),
-        dropDownBlock = document.querySelector('.dropdown-lists__list dropdown-lists__list--default'),
-        selectBlock = document.querySelector('.dropdown-lists__list dropdown-lists__list--select');
-console.log(selectBlock);
+        dropDownBlock = document.querySelector('.dropdown-lists__list--default'),
+        selectBlock = document.querySelector('.dropdown-lists__list--select');
+
     //Sorting array with cities of each country
     const getCitiesTop = (citiesArr) => {
         citiesArr.sort((a, b) => (+a.count) - (+b.count));
@@ -52,13 +52,15 @@ console.log(selectBlock);
 
     //Funcion for rendering choose city list
     const renderCitiesList = (countryObj) => {
+        let cityArr = countryObj.cities.reverse();
+
         chooseCountryList.innerHTML = `<div class="dropdown-lists__total-line">
                                             <div class="dropdown-lists__country">${countryObj.country}</div>
                                             <div class="dropdown-lists__count">${countryObj.count}</div>
                                         </div>
                                         `;
         
-        countryObj.cities.forEach(city => {
+        cityArr.forEach(city => {
             let block = document.createElement('div');
 
             block.classList.add('dropdown-lists__line');
@@ -66,8 +68,11 @@ console.log(selectBlock);
             block.innerHTML = `<div class="dropdown-lists__city">${city.name}</div>
                                 <div class="dropdown-lists__count">${city.count}</div>
                                 `;
+
+            chooseCountryList.append(block);
         });
-console.log(dropDownBlock);
+
+
         dropDownBlock.style.display = 'none';
         selectBlock.style.display = 'block';
     };
