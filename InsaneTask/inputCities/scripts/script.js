@@ -3,12 +3,17 @@
 window.addEventListener('DOMContentLoaded', () => {
 
     const input = document.getElementById('select-cities'),
-        dropDownList = document.querySelector('.dropdown-lists__col');
-
+        dropDownList = document.querySelector('.dropdown-lists__col'),
+        chooseCountryList = document.querySelector('.dropdown-lists__countryBlock'),
+        dropDownBlock = document.querySelector('.dropdown-lists__list dropdown-lists__list--default'),
+        selectBlock = document.querySelector('.dropdown-lists__list dropdown-lists__list--select');
+console.log(selectBlock);
+    //Sorting array with cities of each country
     const getCitiesTop = (citiesArr) => {
         citiesArr.sort((a, b) => (+a.count) - (+b.count));
     };
 
+    //Filling main block dy countries and top3 citys-list
     const countryChartRender = (arr) => {
         input.addEventListener('click', () => {
             arr.forEach(obj => {
@@ -44,6 +49,45 @@ window.addEventListener('DOMContentLoaded', () => {
         });
          
     };
+
+    //Funcion for rendering choose city list
+    const renderCitiesList = (countryObj) => {
+        chooseCountryList.innerHTML = `<div class="dropdown-lists__total-line">
+                                            <div class="dropdown-lists__country">${countryObj.country}</div>
+                                            <div class="dropdown-lists__count">${countryObj.count}</div>
+                                        </div>
+                                        `;
+        
+        countryObj.cities.forEach(city => {
+            let block = document.createElement('div');
+
+            block.classList.add('dropdown-lists__line');
+
+            block.innerHTML = `<div class="dropdown-lists__city">${city.name}</div>
+                                <div class="dropdown-lists__count">${city.count}</div>
+                                `;
+        });
+console.log(dropDownBlock);
+        dropDownBlock.style.display = 'none';
+        selectBlock.style.display = 'block';
+    };
+
+    //Function for finding chosing country and all cities information
+    const countryChoose = (countriesArr) => {
+        dropDownList.addEventListener('click', (event) => {
+            const target = event.target;
+
+            if(target.classList.contains('dropdown-lists__total-line') || target.classList.contains('dropdown-lists__country')){
+                countriesArr.forEach(obj => {
+                   if(target.textContent.includes(obj.country)){
+                        renderCitiesList(obj);
+                    }
+                });
+
+
+            }
+        }) 
+    };
     
     
     
@@ -62,7 +106,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
             return array;
         })
-        .then(console.log)
+        .then(countryChoose)
         .catch(error => console.error(error));
 
 });
