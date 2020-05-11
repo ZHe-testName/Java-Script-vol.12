@@ -101,7 +101,25 @@ window.addEventListener('DOMContentLoaded', () => {
     };
 
     const liveSearch = (allCityNames) => {
+        autocompleteList.innerHTML = '';
 
+        let resArr = allCityNames.filter(item => {
+            let pattern = item.toLowerCase().slice(0, input.value.length);
+
+            if(pattern === input.value.toLowerCase()){
+                return true;
+            }
+        });
+
+        resArr.forEach(item => {
+            let block = document.createElement('div');
+
+            block.classList.add('dropdown-lists__line');
+            block.innerHTML = `<div class="dropdown-lists__city">${item}</div>
+                                `;
+
+            autocompleteList.append(block);
+        })
     };
 
     const citiesShow = (array) => {
@@ -114,7 +132,17 @@ window.addEventListener('DOMContentLoaded', () => {
         let cityNamesArr = allCities.map(obj => obj.name);
 
         input.addEventListener('input', () => {
+            let flag = false;
+
+            (input.value.length === 1) ? flag = true : flag = false;
+
             liveSearch(cityNamesArr);
+
+            if(flag){
+                dropDownBlock.style.display = 'none';
+                selectBlock.style.display = 'none';
+                autocompleteList.style.display = 'block';
+            }
         });
     };
 
