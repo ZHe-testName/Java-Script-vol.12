@@ -8,7 +8,8 @@ window.addEventListener('DOMContentLoaded', () => {
         dropDownBlock = document.querySelector('.dropdown-lists__list--default'),
         selectBlock = document.querySelector('.dropdown-lists__list--select'),
         autocompleteList = document.querySelector('.dropdown-lists__list--autocomplete'),
-        goButton = document.querySelector('.button');
+        goButton = document.querySelector('.button'),
+        closeButton = document.querySelector('.close-button');
 
     goButton.setAttribute('disable', 'disabled');
 
@@ -33,25 +34,31 @@ window.addEventListener('DOMContentLoaded', () => {
                                             <div class="dropdown-lists__country">${obj.country}</div>
                                             <div class="dropdown-lists__count">${obj.count}</div>
                                         </div>
-                                        <div class="dropdown-lists__line">
-                                            <div class="dropdown-lists__city dropdown-lists__city--ip">${top[0].name}</div>
-                                            <div class="dropdown-lists__count">${top[0].count}</div>
-                                        </div>
-                                        <div class="dropdown-lists__line">
-                                            <div class="dropdown-lists__city">${top[1].name}</div>
-                                            <div class="dropdown-lists__count">${top[1].count}</div>
-                                        </div>
-                                        <div class="dropdown-lists__line">
-                                            <div class="dropdown-lists__city">${top[2].name}</div>
-                                            <div class="dropdown-lists__count">${top[2].count}</div>
-                                        </div>
                                         `;
+
+                for(let i = 0; i < top.length; i++){
+                    let div = document.createElement('div');
+                    div.classList.add('dropdown-lists__line');
+
+                    if(i === 0){
+                        div.innerHTML = `<div class="dropdown-lists__city dropdown-lists__city--ip">${top[i].name}</div>
+                                    <div class="dropdown-lists__count">${top[i].count}</div>`;
+
+                        countryBlock.append(div);
+                    }else{
+                        div.innerHTML = `<div class="dropdown-lists__city dropdown-lists__city">${top[i].name}</div>
+                                    <div class="dropdown-lists__count">${top[i].count}</div>`;
+
+                        countryBlock.append(div);
+                    }
+                }
     
                 dropDownList.append(countryBlock);
             });
     
         });
-         
+        
+        return arr;
     };
 
     //Funcion for rendering choose city list
@@ -81,6 +88,27 @@ window.addEventListener('DOMContentLoaded', () => {
         selectBlock.style.display = 'block';
     };
 
+    //Function for handling clicks to cities in different fields
+    const cityClickHandler = (target) => {
+        if(target.classList.contains('dropdown-lists__line')){
+            input.value = target.firstChild.textContent;
+        }else if(target.classList.contains('dropdown-lists__city')){
+            input.value = target.textContent;   
+        }    
+
+        if(target.classList.contains('dropdown-lists__line') || target.classList.contains('dropdown-lists__city')){
+            let fakeInputEvent = new Event("input");
+
+            input.dispatchEvent(fakeInputEvent);
+            input.focus();
+
+            dropDownBlock.style.display = 'none';
+            selectBlock.style.display = 'none';
+            autocompleteList.style.display = 'block';
+            closeButton.style.display = 'block';
+        }
+    };
+
     //Function for finding chosing country and all cities information
     const countryChoose = (countriesArr) => {
         dropDownList.addEventListener('click', (event) => {
@@ -92,14 +120,28 @@ window.addEventListener('DOMContentLoaded', () => {
                         renderCitiesList(obj);
                     }
                 });
-
-
             }
+
+           cityClickHandler(target);
+
+        });
+
+        selectBlock.addEventListener('click', (event) => {
+            let target = event.target;
+
+            cityClickHandler(target);
+        });
+
+        autocompleteList.addEventListener('click', (event) => {
+            let target = event.target;
+
+            cityClickHandler(target);
         });
 
         return countriesArr;
     };
 
+    //Live search of most suitable cities for request
     const liveSearch = (allCityNames) => {
         autocompleteList.innerHTML = '';
 
@@ -111,17 +153,28 @@ window.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        resArr.forEach(item => {
+        if(resArr.length === 0){
             let block = document.createElement('div');
 
             block.classList.add('dropdown-lists__line');
-            block.innerHTML = `<div class="dropdown-lists__city">${item}</div>
+            block.innerHTML = `<div class="dropdown-lists__city">Ничего не найдено</div>
                                 `;
 
             autocompleteList.append(block);
-        })
+        }else{
+            resArr.forEach(item => {
+                let block = document.createElement('div');
+    
+                block.classList.add('dropdown-lists__line');
+                block.innerHTML = `<div class="dropdown-lists__city">${item}</div>
+                                    `;
+    
+                autocompleteList.append(block);
+            })
+        }
     };
 
+    //Show most suitables cities during input event
     const citiesShow = (array) => {
         let allCities  = [];
 
@@ -136,7 +189,13 @@ window.addEventListener('DOMContentLoaded', () => {
 
             (input.value.length === 1) ? flag = true : flag = false;
 
-            liveSearch(cityNamesArr);
+            if(input.value.length > 0){
+                liveSearch(cityNamesArr);
+            }else{
+                dropDownBlock.style.display = 'block';
+                selectBlock.style.display = 'none';
+                autocompleteList.style.display = 'none';
+            }
 
             if(flag){
                 dropDownBlock.style.display = 'none';
@@ -144,6 +203,8 @@ window.addEventListener('DOMContentLoaded', () => {
                 autocompleteList.style.display = 'block';
             }
         });
+
+        return array;
     };
 
 
@@ -158,11 +219,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 return obj;
             }
         })
-        .then(array => {
-            countryChartRender(array);
-
-            return array;
-        })
+        .then(countryChartRender)
         .then(countryChoose)
         .then(citiesShow)
         .catch(error => console.error(error));
