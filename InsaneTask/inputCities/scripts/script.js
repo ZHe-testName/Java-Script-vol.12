@@ -6,7 +6,11 @@ window.addEventListener('DOMContentLoaded', () => {
         dropDownList = document.querySelector('.dropdown-lists__col'),
         chooseCountryList = document.querySelector('.dropdown-lists__countryBlock'),
         dropDownBlock = document.querySelector('.dropdown-lists__list--default'),
-        selectBlock = document.querySelector('.dropdown-lists__list--select');
+        selectBlock = document.querySelector('.dropdown-lists__list--select'),
+        autocompleteList = document.querySelector('.dropdown-lists__list--autocomplete'),
+        goButton = document.querySelector('.button');
+
+    goButton.setAttribute('disable', 'disabled');
 
     //Sorting array with cities of each country
     const getCitiesTop = (citiesArr) => {
@@ -91,10 +95,30 @@ window.addEventListener('DOMContentLoaded', () => {
 
 
             }
-        }) 
+        });
+
+        return countriesArr;
     };
-    
-    
+
+    const liveSearch = (allCityNames) => {
+
+    };
+
+    const citiesShow = (array) => {
+        let allCities  = [];
+
+        array.forEach(obj => {
+            allCities = allCities.concat(obj.cities);
+        });
+
+        let cityNamesArr = allCities.map(obj => obj.name);
+
+        input.addEventListener('input', () => {
+            liveSearch(cityNamesArr);
+        });
+    };
+
+
     
     const response = fetch('http://localhost:3000/RU');
 
@@ -112,6 +136,7 @@ window.addEventListener('DOMContentLoaded', () => {
             return array;
         })
         .then(countryChoose)
+        .then(citiesShow)
         .catch(error => console.error(error));
 
 });
