@@ -181,8 +181,15 @@ window.addEventListener('DOMContentLoaded', () => {
 
         });
 
-        closeSlider.addEventListener('click', () => {
-            coverSlider.classList.remove('show-slider');
+        coverSlider.addEventListener('click', (e) => {
+            let target = e.target;
+
+            if(target.classList.contains('show-slider') || 
+                target.classList.contains('close-slider') || 
+                target.classList.contains('slider')){
+                    
+                coverSlider.classList.remove('show-slider');
+            }
         });
     }
 
