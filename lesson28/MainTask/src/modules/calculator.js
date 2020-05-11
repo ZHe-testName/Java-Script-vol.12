@@ -11,9 +11,13 @@ const calculator = (price = 100) => {
         let intervalIndex = setInterval(() => {
             if(finishRez >= num){
                 totalValue.textContent = num;
-                num += 100;
+                num += 200;
             }else if(finishRez < num){
                 clearInterval(intervalIndex);
+
+                for(let i = 1; i < 9; i += 2){
+                    calcBlock.childNodes[i].removeAttribute('readonly');
+                }
             }
         }, 10);
     };
@@ -38,6 +42,11 @@ const calculator = (price = 100) => {
         
         if(typeValue && squareValue){
             total = Math.floor(price * typeValue * squareValue * countValue * dayValue);
+
+            for(let i = 1; i < 9; i += 2){
+                calcBlock.childNodes[i].setAttribute('readonly', 'true');
+            }
+
             totalAnimate(total);
         }
 
