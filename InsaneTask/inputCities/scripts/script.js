@@ -11,7 +11,8 @@ window.addEventListener('DOMContentLoaded', () => {
         goButton = document.querySelector('.button'),
         closeButton = document.querySelector('.close-button');
 
-    goButton.setAttribute('disable', 'disabled');
+    goButton.classList.add('disabled');
+    goButton.setAttribute('target', '_blank');
 
     //Sorting array with cities of each country
     const getCitiesTop = (citiesArr) => {
@@ -88,15 +89,34 @@ window.addEventListener('DOMContentLoaded', () => {
         selectBlock.style.display = 'block';
     };
 
+    //Close button click handler function
+    const closeBtnHandler = () => {
+        input.value = '';
+
+        autocompleteList.style.display = 'none';
+        closeButton.style.display = 'none';
+
+        goButton.setAttribute('href', '#');
+        goButton.classList.add('disabled');
+    };
+
     //Function for handling clicks to cities in different fields
-    const cityClickHandler = (target) => {
+    const cityClickHandler = (target, arrayOfCities) => {
         if(target.classList.contains('dropdown-lists__line')){
             input.value = target.firstChild.textContent;
+
+            let fakeInputEvent = new Event("input");
+
+            input.dispatchEvent(fakeInputEvent);
+            input.focus();
+
+            dropDownBlock.style.display = 'none';
+            selectBlock.style.display = 'none';
+            autocompleteList.style.display = 'block';
+            closeButton.style.display = 'block';
         }else if(target.classList.contains('dropdown-lists__city')){
             input.value = target.textContent;   
-        }    
 
-        if(target.classList.contains('dropdown-lists__line') || target.classList.contains('dropdown-lists__city')){
             let fakeInputEvent = new Event("input");
 
             input.dispatchEvent(fakeInputEvent);
@@ -107,10 +127,31 @@ window.addEventListener('DOMContentLoaded', () => {
             autocompleteList.style.display = 'block';
             closeButton.style.display = 'block';
         }
+
+        let currentCityObj = arrayOfCities.find(obj => {
+            if(obj.name === input.value.trim()){
+                return true;
+            }
+        });
+        
+        goButton.classList.remove('disabled');
+        goButton.setAttribute('href', `${currentCityObj.link}`);
+
+        closeButton.addEventListener('click', () => {
+            closeBtnHandler();
+        });
     };
 
     //Function for finding chosing country and all cities information
     const countryChoose = (countriesArr) => {
+        let array = countriesArr.map(obj => obj.cities);
+        let cityArr = [];
+
+
+        array.forEach(arr => {
+            cityArr = cityArr.concat(arr);
+        })
+
         dropDownList.addEventListener('click', (event) => {
             const target = event.target;
 
@@ -122,20 +163,20 @@ window.addEventListener('DOMContentLoaded', () => {
                 });
             }
 
-           cityClickHandler(target);
+           cityClickHandler(target, cityArr);
 
         });
 
         selectBlock.addEventListener('click', (event) => {
             let target = event.target;
 
-            cityClickHandler(target);
+            cityClickHandler(target, cityArr);
         });
 
         autocompleteList.addEventListener('click', (event) => {
             let target = event.target;
 
-            cityClickHandler(target);
+            cityClickHandler(target, cityArr);
         });
 
         return countriesArr;
@@ -195,6 +236,10 @@ window.addEventListener('DOMContentLoaded', () => {
                 dropDownBlock.style.display = 'block';
                 selectBlock.style.display = 'none';
                 autocompleteList.style.display = 'none';
+                closeButton.style.display = 'none';
+
+                goButton.setAttribute('href', '#');
+                goButton.classList.add('disabled');
             }
 
             if(flag){
@@ -203,6 +248,12 @@ window.addEventListener('DOMContentLoaded', () => {
                 autocompleteList.style.display = 'block';
             }
         });
+
+        input.addEventListener('click', () => {
+            if(input.value.length === 0){
+                dropDownBlock.style.display = 'block';
+            }
+        })
 
         return array;
     };

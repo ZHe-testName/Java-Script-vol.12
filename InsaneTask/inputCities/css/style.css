@@ -10,6 +10,11 @@ input:focus {
   outline: none;
 }
 
+.disabled{
+  pointer-events: none;
+  cursor: default;
+}
+
 body {
   font-family: 'Roboto', sans-serif;
   font-weight: 400;
