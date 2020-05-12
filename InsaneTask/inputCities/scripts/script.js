@@ -11,7 +11,8 @@ window.addEventListener('DOMContentLoaded', () => {
         goButton = document.querySelector('.button'),
         closeButton = document.querySelector('.close-button'),
         mainField = document.querySelector('.main'),
-        allLists = document.querySelector('.dropdown');
+        allLists = document.querySelector('.dropdown'),
+        lists = document.querySelector('.dropdown-lists');
 
     goButton.classList.add('disabled');
     goButton.setAttribute('target', '_blank');
@@ -20,6 +21,23 @@ window.addEventListener('DOMContentLoaded', () => {
     const getCitiesTop = (citiesArr) => {
         citiesArr.sort((a, b) => (+a.count) - (+b.count));
     };
+
+    //Animation list function
+    const animate = () => {
+        let num = 0;
+        let width = (dropDownList.clientWidth + 6) * -1;
+
+        requestAnimationFrame(function indexInt(){
+
+            if(lists.offsetLeft > width){
+                num -= 20;
+
+                lists.style.left = num + 'px';
+                requestAnimationFrame(indexInt);
+            }
+        });
+    };
+
 
     //Filling main block dy countries and top3 citys-list
     const countryChartRender = (arr) => {
@@ -83,6 +101,10 @@ window.addEventListener('DOMContentLoaded', () => {
             }
 
         });
+
+        closeButton.addEventListener('click', () => {
+            closeBtnHandler();
+        });
         
         return arr;
     };
@@ -108,12 +130,7 @@ window.addEventListener('DOMContentLoaded', () => {
             chooseCountryList.append(block);
         });
 
-        closeButton.addEventListener('click', () => {
-            closeBtnHandler();
-        });
-
-
-        dropDownBlock.style.display = 'none';
+        dropDownBlock.style.display = 'block';
         selectBlock.style.display = 'block';
         closeButton.style.display = 'block';
     };
@@ -188,6 +205,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 countriesArr.forEach(obj => {
                    if(target.textContent.includes(obj.country)){
                         renderCitiesList(obj);
+                        animate();
                     }
                 });
             }else{

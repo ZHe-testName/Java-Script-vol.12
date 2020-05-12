@@ -123,10 +123,12 @@ body .main .input-cities label {
   width: 100%;
   background: #fff;
   max-height: 300px;
-  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: scroll;
 }
 
 .dropdown-lists {
+  position: relative;
   width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -137,8 +139,13 @@ body .main .input-cities label {
   width: 100%;
 }
 
+.dropdown-lists__list--default {
+  min-width: 100%;
+}
+
 .dropdown-lists__list--select {
   display: none;
+  min-width: 100%;
 }
 
 .dropdown-lists__list--autocomplete {
