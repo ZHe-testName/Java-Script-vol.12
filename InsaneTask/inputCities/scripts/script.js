@@ -9,7 +9,9 @@ window.addEventListener('DOMContentLoaded', () => {
         selectBlock = document.querySelector('.dropdown-lists__list--select'),
         autocompleteList = document.querySelector('.dropdown-lists__list--autocomplete'),
         goButton = document.querySelector('.button'),
-        closeButton = document.querySelector('.close-button');
+        closeButton = document.querySelector('.close-button'),
+        mainField = document.querySelector('.main'),
+        allLists = document.querySelector('.dropdown');
 
     goButton.classList.add('disabled');
     goButton.setAttribute('target', '_blank');
@@ -21,7 +23,10 @@ window.addEventListener('DOMContentLoaded', () => {
 
     //Filling main block dy countries and top3 citys-list
     const countryChartRender = (arr) => {
+
         input.addEventListener('click', () => {
+            dropDownList.innerHTML = '';
+
             arr.forEach(obj => {
                 getCitiesTop(obj.cities);
                 
@@ -53,10 +58,30 @@ window.addEventListener('DOMContentLoaded', () => {
                         countryBlock.append(div);
                     }
                 }
-    
+                
                 dropDownList.append(countryBlock);
             });
+
+            if(input.value.length === 0){
+                dropDownBlock.style.display = 'block';
+            }
     
+        });
+
+       
+
+        mainField.addEventListener('click', (event) => {
+            let target = event.target;
+
+            if(target.classList.contains('main')){
+                dropDownBlock.style.display = 'none';
+                selectBlock.style.display = 'none';
+                autocompleteList.style.display = 'none'
+                closeButton.style.display = 'none';
+
+                input.value = '';
+            }
+
         });
         
         return arr;
@@ -66,11 +91,10 @@ window.addEventListener('DOMContentLoaded', () => {
     const renderCitiesList = (countryObj) => {
         let cityArr = countryObj.cities.reverse();
 
-        chooseCountryList.innerHTML = `<div class="dropdown-lists__total-line">
-                                            <div class="dropdown-lists__country">${countryObj.country}</div>
-                                            <div class="dropdown-lists__count">${countryObj.count}</div>
-                                        </div>
-                                        `;
+        input.value = countryObj.country;
+        input.focus();
+
+        chooseCountryList.innerHTML = '';
         
         cityArr.forEach(city => {
             let block = document.createElement('div');
@@ -84,17 +108,25 @@ window.addEventListener('DOMContentLoaded', () => {
             chooseCountryList.append(block);
         });
 
+        closeButton.addEventListener('click', () => {
+            closeBtnHandler();
+        });
+
 
         dropDownBlock.style.display = 'none';
         selectBlock.style.display = 'block';
+        closeButton.style.display = 'block';
     };
 
     //Close button click handler function
     const closeBtnHandler = () => {
         input.value = '';
 
+        dropDownBlock.style.display = 'block';
         autocompleteList.style.display = 'none';
         closeButton.style.display = 'none';
+        selectBlock.style.display = 'none';
+
 
         goButton.setAttribute('href', '#');
         goButton.classList.add('disabled');
@@ -137,9 +169,6 @@ window.addEventListener('DOMContentLoaded', () => {
         goButton.classList.remove('disabled');
         goButton.setAttribute('href', `${currentCityObj.link}`);
 
-        closeButton.addEventListener('click', () => {
-            closeBtnHandler();
-        });
     };
 
     //Function for finding chosing country and all cities information
@@ -161,9 +190,9 @@ window.addEventListener('DOMContentLoaded', () => {
                         renderCitiesList(obj);
                     }
                 });
+            }else{
+                cityClickHandler(target, cityArr);
             }
-
-           cityClickHandler(target, cityArr);
 
         });
 
@@ -248,12 +277,6 @@ window.addEventListener('DOMContentLoaded', () => {
                 autocompleteList.style.display = 'block';
             }
         });
-
-        input.addEventListener('click', () => {
-            if(input.value.length === 0){
-                dropDownBlock.style.display = 'block';
-            }
-        })
 
         return array;
     };
