@@ -124,7 +124,7 @@ body .main .input-cities label {
   background: #fff;
   max-height: 300px;
   overflow-x: hidden;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .dropdown-lists {
