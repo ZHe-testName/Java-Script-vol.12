@@ -18,6 +18,47 @@ window.addEventListener('DOMContentLoaded', () => {
     goButton.classList.add('disabled');
     goButton.setAttribute('target', '_blank');
 
+    //Function for finding cookie by name
+    function getCookie(name) {
+        let matches = document.cookie.match(new RegExp(
+          "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+        ));
+        return matches ? decodeURIComponent(matches[1]) : undefined;
+    };
+
+    //Function for writing cookie into browser
+    function setCookie(name, value, options = {}) {
+
+        options = {
+          path: '/',
+          // при необходимости добавьте другие значения по умолчанию
+          ...options
+        };
+      
+        if (options.expires instanceof Date) {
+          options.expires = options.expires.toUTCString();
+        }
+      
+        let updatedCookie = encodeURIComponent(name) + "=" + encodeURIComponent(value);
+      
+        for (let optionKey in options) {
+          updatedCookie += "; " + optionKey;
+          let optionValue = options[optionKey];
+          if (optionValue !== true) {
+            updatedCookie += "=" + optionValue;
+          }
+        }
+      
+        document.cookie = updatedCookie;
+    };
+    
+    //Function for deleting cookie by name
+    function deleteCookie(name) {
+        setCookie(name, "", {
+          'max-age': -1
+        })
+      }
+
     //Sorting array with cities of each country
     const getCitiesTop = (citiesArr) => {
         citiesArr.sort((a, b) => (+a.count) - (+b.count));
@@ -25,7 +66,6 @@ window.addEventListener('DOMContentLoaded', () => {
 
     //Animation list function
     const animate = (reverse = false) => {
-        console.log(lists.offsetLeft);
         let num = lists.offsetLeft;
         let width = (dropDownList.clientWidth + 6) * -1;
 
@@ -40,7 +80,6 @@ window.addEventListener('DOMContentLoaded', () => {
                 }
             });
         }else{
-            console.log('done');
             requestAnimationFrame(function indexInt(){
 
                 if(lists.offsetLeft !== 0){
@@ -54,9 +93,11 @@ window.addEventListener('DOMContentLoaded', () => {
 
     };
 
-
     //Filling main block dy countries and top3 citys-list
     const countryChartRender = (arr) => {
+        let arrForLocStor = JSON.stringify(arr);
+
+        localStorage.setItem('countryData', arrForLocStor);
 
         input.addEventListener('click', () => {
             dropDownList.innerHTML = '';
@@ -320,29 +361,90 @@ window.addEventListener('DOMContentLoaded', () => {
         return array;
     };
 
-    const response =  fetch('http://localhost:3000/RU');
+    //Key requst validator
+    const inputValidator = () => {
+        let countryKey = prompt('Выберите язык :(RU|DE|EN)');
 
-    loader.style.display = 'block';
+        if(countryKey){
+            countryKey = countryKey.trim().toLowerCase();
+        }
+    
+        if(countryKey && countryKey.length === 2){
+            switch(countryKey){
+                case 'ru':
+                    countryKey = 'RU';
+                    break;
+                case 'en':
+                    countryKey = 'EN';
+                    break;
+                case 'de':
+                    countryKey = 'DE';
+                    break;
+                default:
+                    inputValidator();
+            }
+        }else if(countryKey === null){
+            countryKey = null;
+        }else{
+            inputValidator();
+        }
 
-    if(response){
-        setTimeout(() => {
-            response
-            .then(response => {
-                if(response.ok && response.status === 200){
-                    let obj = response.json();
+        return countryKey; 
+    };
 
-                    return obj;
-                }
-            })
-            .then(countryChartRender)
-            .then(countryChoose)
-            .then(citiesShow)
-            .finally(() => {
-                loader.style.display = 'none';
-            })
-            .catch(error => console.error(error));
-        }, 3000);
+    const initFunction = (key = 'RU') => {
+        const response =  fetch(`http://localhost:3000/${key}`);
+
+        loader.style.display = 'block';
+
+        if(response){
+            setTimeout(() => {
+                response
+                .then(response => {
+                    if(response.ok && response.status === 200){
+                        let obj = response.json();
+
+                        return obj;
+                    }
+                })
+                .then(countryChartRender)
+                .then(countryChoose)
+                .then(citiesShow)
+                .finally(() => {
+                    loader.style.display = 'none';
+                })
+                .catch(error => console.error(error));
+            }, 3000);
+        }
     }
+
+    const cookieCheck = () => {
+        let cookaName = 'countryCode';
+        let cook = getCookie(cookaName);
+        let cityArr = localStorage.getItem('countryData');
+
+        if(cityArr){
+            cityArr = JSON.parse(cityArr);
+        }
+
+        if(cook){
+            countryChartRender(cityArr);
+            countryChoose(cityArr);
+            citiesShow(cityArr);
+        }else{
+            cook = inputValidator();
+
+            if(cook){
+                setCookie(cookaName, cook);
+                initFunction(cook);
+            }
+        }
+    };
+    
+    cookieCheck();
+
+    // deleteCookie('countryCode');
+    // localStorage.removeItem('countryData');
 });
 
 
