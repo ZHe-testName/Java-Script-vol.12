@@ -95,6 +95,12 @@ window.addEventListener('DOMContentLoaded', () => {
 
     //Filling main block dy countries and top3 citys-list
     const countryChartRender = (arr) => {
+        if(arr[0].country === "Russia"){
+            [arr[0], arr[2]] = [arr[2], arr[0]];
+        }else if(arr[0].country === "Russland"){
+            [arr[0], arr[1]] = [arr[1], arr[0]];
+        }
+console.log(arr);
         let arrForLocStor = JSON.stringify(arr);
 
         localStorage.setItem('countryData', arrForLocStor);
@@ -392,6 +398,7 @@ window.addEventListener('DOMContentLoaded', () => {
         return countryKey; 
     };
 
+    //Function for init app
     const initFunction = (key = 'RU') => {
         const response =  fetch(`http://localhost:3000/${key}`);
 
@@ -418,6 +425,7 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    //Check for cookie file
     const cookieCheck = () => {
         let cookaName = 'countryCode';
         let cook = getCookie(cookaName);
