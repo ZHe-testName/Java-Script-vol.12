@@ -7,7 +7,7 @@ const headerActons = () => {
         buttonFooter = document.querySelector('.button-footer');
 
     let dirFlag = false;
-
+    headerArrow.style.zIndex = '100';
     header.addEventListener('click', (event) => {
         let target = event.target;
         

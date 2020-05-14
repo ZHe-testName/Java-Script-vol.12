@@ -365,6 +365,7 @@ template, [hidden] {
           transition: 0.5s;
           opacity: 0; }
     .header-contacts__arrow {
+      z-index: 3;
       cursor: pointer;
       -webkit-transition: 0.5s;
       transition: 0.5s; }
