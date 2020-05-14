@@ -6481,3 +6481,10 @@ strong {
 
 .slider-dots {
   display: none; }
+
+
+/*/////////////// Animation classes for scripts /////////////*/
+
+.rotate-header-arrow{
+  transform: rotate(540deg);
+}
