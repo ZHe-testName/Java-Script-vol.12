@@ -6488,3 +6488,7 @@ strong {
 .rotate-header-arrow{
   transform: rotate(540deg);
 }
+
+.header-menu-descktop-show{
+  right: 645px;
+}

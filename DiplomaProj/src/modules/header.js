@@ -1,7 +1,8 @@
 const headerActons = () => {
     const header = document.querySelector('.header'),
         phoneNumber = document.querySelector('.header-contacts__phone-number-accord'),
-        headerArrow = document.querySelector('.header-contacts__arrow');
+        headerArrow = document.querySelector('.header-contacts__arrow'),
+        mainMenu = document.querySelector('.popup-dialog-menu');
 
     let dirFlag = false;
 
@@ -24,7 +25,19 @@ const headerActons = () => {
             }
            
         }
-    })
+
+        if(target.classList.contains('menu__icon')){
+            mainMenu.classList.add('header-menu-descktop-show');
+        }
+    });
+
+    mainMenu.addEventListener('click', (event) => {
+        let target = event.target;
+
+        if(target.classList.contains('close-menu')){
+            mainMenu.classList.remove('header-menu-descktop-show');
+        }
+    });
 };
 
 export default headerActons;
