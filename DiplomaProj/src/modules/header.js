@@ -2,7 +2,8 @@ const headerActons = () => {
     const header = document.querySelector('.header'),
         phoneNumber = document.querySelector('.header-contacts__phone-number-accord'),
         headerArrow = document.querySelector('.header-contacts__arrow'),
-        mainMenu = document.querySelector('.popup-dialog-menu');
+        mainMenu = document.querySelector('.popup-dialog-menu'),
+        body = document.querySelector('body');
 
     let dirFlag = false;
 
@@ -28,6 +29,10 @@ const headerActons = () => {
 
         if(target.classList.contains('menu__icon')){
             mainMenu.classList.add('header-menu-descktop-show');
+
+            if(body.clientWidth < 576){
+                mainMenu.classList.add('header-menu-mobile-show');
+            }
         }
     });
 
@@ -36,7 +41,13 @@ const headerActons = () => {
 
         if(target.classList.contains('close-menu')){
             mainMenu.classList.remove('header-menu-descktop-show');
+
+            if(body.clientWidth < 576){
+                mainMenu.classList.remove('header-menu-mobile-show');
+            }
         }
+
+
     });
 };
 
