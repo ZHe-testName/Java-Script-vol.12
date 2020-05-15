@@ -1,5 +1,5 @@
 const headerActons = () => {
-    const header = document.querySelector('.header'),
+    const main = document.querySelector('.main'),
         phoneNumber = document.querySelector('.header-contacts__phone-number-accord'),
         headerArrow = document.querySelector('.header-contacts__arrow'),
         mainMenu = document.querySelector('.popup-dialog-menu'),
@@ -8,7 +8,7 @@ const headerActons = () => {
 
     let dirFlag = false;
     headerArrow.style.zIndex = '100';
-    header.addEventListener('click', (event) => {
+    main.addEventListener('click', (event) => {
         let target = event.target;
         
         if(target.classList.contains('header-contacts__arrow') || target.id === 'headerArrow'){
@@ -35,6 +35,7 @@ const headerActons = () => {
                 mainMenu.classList.add('header-menu-mobile-show');
             }
         }
+
     });
 
     mainMenu.addEventListener('click', (event) => {
