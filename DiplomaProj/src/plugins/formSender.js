@@ -25,17 +25,14 @@ class Sender{
             this.body = {};
 
             this.formInputs = this.form.querySelectorAll('input');
+            console.log(this.formInputs);
             this.formInputs.forEach(item => {
                 if(item.getAttribute('name') === 'phone'){
                     this.body[item.getAttribute('name')] = item.value;
-                    console.log(this.body);
+                }else if(item.getAttribute('name') === 'name'){
+                    this.body[item.getAttribute('name')] = item.value;
                 }
             })
-
-
-            // this.formData.forEach((val, key) => {
-            //     this.body[key] = val;
-            // });
 
             this.postData(this.body)
                 .then(responce => {
@@ -52,6 +49,16 @@ class Sender{
                 });
         });
 
+        this.form.addEventListener('input', (event) => {
+            let target = event.target;
+
+            if(target.getAttribute('name') === 'name'){
+                this.wordsValidator(target);
+            }else if(target.getAttribute('name') === 'phone'){
+                this.numsValidator(target);
+            }
+        })
+
         this.postData = (body) => {
 
             return fetch('./server.php', {
@@ -62,6 +69,17 @@ class Sender{
                 body: JSON.stringify(body),
             });
         };
+
+        this.numsValidator = (target) => {
+            this.value = target.value;
+            target.value = this.value.replace(/[^+\d]/, '');
+        };
+
+        this.wordsValidator = (target) => {
+            this.val = target.value;
+            target.value = this.val.replace(/[^а-я\s\.]/, '');
+        }
+
     };
 } 
 
