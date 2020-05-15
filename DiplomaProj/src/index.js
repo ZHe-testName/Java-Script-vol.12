@@ -10,7 +10,13 @@ import headerActons from './modules/header';
 //PopUp window actions
 import repairPopUpActions from './modules/repiarPopUp';
 
+//Feedback forms
+import * as feedBackFormObj from './modules/feedbackForm';
+
 
 headerActons();
 
 repairPopUpActions();
+
+feedBackFormObj.headerForm.init();
+feedBackFormObj.actionForm.init();
