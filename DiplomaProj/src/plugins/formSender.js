@@ -3,6 +3,7 @@ class Sender{
         this.form = document.querySelector(selector);
         this.errorMessage = 'Что-то пошло не так...';
         this.successMessage = 'Спасибо! Мы скоро с Вами свяжемся.';
+        this.check = false;
         this.formInputs;
 
         // this.statusMessage = document.createElement('div');
@@ -25,16 +26,17 @@ class Sender{
             this.body = {};
 
             this.formInputs = this.form.querySelectorAll('input');
-            console.log(this.formInputs);
+            
             this.formInputs.forEach(item => {
                 if(item.getAttribute('name') === 'phone'){
                     this.body[item.getAttribute('name')] = item.value;
                 }else if(item.getAttribute('name') === 'name'){
                     this.body[item.getAttribute('name')] = item.value;
                 }
-            })
+            });
 
-            this.postData(this.body)
+            if(this.check){
+                this.postData(this.body)
                 .then(responce => {
                     if(responce.status !== 200){
                         throw(new Error('Network status is not 200.'));
@@ -47,6 +49,11 @@ class Sender{
                     // this.showResMessage(this.errorMessage);
                     console.error(error);
                 });
+            }else{
+                console.log('no');
+            }
+
+           
         });
 
         this.form.addEventListener('input', (event) => {
@@ -59,7 +66,19 @@ class Sender{
                 this.maskPhone('input');
 
             }
-        })
+        });
+
+        this.form.addEventListener('click', (event) => {
+            let target = event.target;
+
+            if(target.getAttribute('type') === 'checkbox' && (!target.hasAttribute('checked'))){
+                target.setAttribute('checked', 'checked');
+                this.check = !this.check;
+            }else if(target.hasAttribute('checked')){
+                target.removeAttribute('checked');
+                this.check = !this.check;
+            }
+        });
 
         this.postData = (body) => {
 
