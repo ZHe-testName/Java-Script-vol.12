@@ -16,7 +16,7 @@ const repairPopUpActions = () => {
         let target = event.target;
 
         if(target.classList.contains('mobile-hide')){
-            repiarTipesWindow.style = '';
+            repiarTipesWindow.style.visibility = 'hidden';
         }
     });
 
@@ -24,7 +24,7 @@ const repairPopUpActions = () => {
         let target = event.target;
 
         if(target.classList.contains('close')){
-            mobileRepairTypesWindow.style = '';
+            mobileRepairTypesWindow.style.visibility = 'hidden';
         }
     })
 };
