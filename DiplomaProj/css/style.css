@@ -6484,7 +6484,7 @@ strong {
   display: none; }
 
 
-/*/////////////// Animation classes for scripts /////////////*/
+/*///////////////My animation classes for scripts /////////////*/
 
 .rotate-header-arrow{
   transform: rotate(540deg);
@@ -6496,4 +6496,9 @@ strong {
 
 .header-menu-mobile-show{
   top: 670px;
+}
+
+.formula-item-popup-visible{
+  visibility: visible;
+  opacity: 1;
 }

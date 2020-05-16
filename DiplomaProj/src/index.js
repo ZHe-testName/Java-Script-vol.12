@@ -5,25 +5,25 @@
 import 'nodelist-foreach-polyfill';
 
 
+
+
 //All header manipulations functional
 import headerActons from './modules/header';
+headerActons();
 
-//PopUp window actions
+//Repair popUp window actions
 import repairPopUpActions from './modules/repiarPopUp';
+repairPopUpActions();
 
 //Feedback forms
 import * as feedBackFormObj from './modules/feedbackForm';
-
-//Header section init
-headerActons();
-
-//Repair popUp actions
-repairPopUpActions();
-
-//Forms forwarding initialization
 feedBackFormObj.headerForm.init();
 feedBackFormObj.letsGoForm.init();
 feedBackFormObj.actionForm.init();
 feedBackFormObj.repairCostForm.init();
 feedBackFormObj.askQuestionForm.init();
+
+//Formula block actions
+import formulaBlockActions from './modules/formula';
+formulaBlockActions();
 
