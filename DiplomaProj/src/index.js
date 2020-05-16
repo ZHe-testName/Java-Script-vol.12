@@ -5,7 +5,7 @@
 import 'nodelist-foreach-polyfill';
 
 
-//All header manioulations functional
+//All header manipulations functional
 import headerActons from './modules/header';
 
 //PopUp window actions
@@ -20,7 +20,7 @@ headerActons();
 //Repair popUp actions
 repairPopUpActions();
 
-//Forms requst initialization
+//Forms forwarding initialization
 feedBackFormObj.headerForm.init();
 feedBackFormObj.letsGoForm.init();
 feedBackFormObj.actionForm.init();
