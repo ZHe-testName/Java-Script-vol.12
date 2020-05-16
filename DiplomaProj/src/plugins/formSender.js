@@ -22,7 +22,9 @@ class Sender{
             });
 
             if(!window.fetch){
+                if(this.check){
                     this.ieFormSender(this.body);
+                }
             }else{
                 if(this.check){
                     this.postData(this.body)
