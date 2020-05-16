@@ -32,9 +32,14 @@ class Sender{
                     if(response.status !== 200){
                         throw(new Error('Network status is not 200.'));
                     }
+                    const popUpThanksWindow = document.querySelector('.popup-thank-bg');
 
-                    // this.showResMessage(this.successMessage);
-                    console.log(response);
+                    popUpThanksWindow.style.visibility = 'visible';
+                    popUpThanksWindow.style.cursor = 'pointer';
+
+                    popUpThanksWindow.addEventListener('click', () => {
+                        popUpThanksWindow.style.visibility = 'hidden';
+                    });
                 })
                 .catch(error => {
                     this.showResMessage(this.errorMessage);
@@ -57,7 +62,7 @@ class Sender{
                 this.wordsValidator(target);
             }else if(target.getAttribute('name') === 'phone'){
                 this.numsValidator(target);
-                this.maskPhone('input');
+                this.maskPhone('.feedback-block__form-input_phone');
 
             }
         });
