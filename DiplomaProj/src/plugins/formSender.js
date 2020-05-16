@@ -78,6 +78,20 @@ class Sender{
                 target.removeAttribute('checked');
                 this.check = !this.check;
             }
+
+            if(target.classList.contains('link-privacy')){
+                let privacyWindow = document.querySelector('.popup-privacy');
+
+                privacyWindow.style.visibility = 'visible';
+
+                privacyWindow.addEventListener('click', (event) => {
+                    let target = event.target;
+
+                    if(target.classList.contains('mobile-hide')){
+                        privacyWindow.style.visibility = 'hidden';
+                    }
+                });
+            }
         });
 
         this.postData = (body) => {
