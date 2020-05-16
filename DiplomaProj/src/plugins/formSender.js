@@ -1,8 +1,6 @@
 class Sender{
     constructor(selector){
         this.form = document.querySelector(selector);
-        this.errorMessage = 'Что-то пошло не так...';
-        this.successMessage = 'Спасибо! Мы скоро с Вами свяжемся.';
         this.check = false;
         this.formInputs;
     }
@@ -42,7 +40,6 @@ class Sender{
                         });
                     })
                     .catch(error => {
-                        this.showResMessage(this.errorMessage);
                         console.error(error);
                     })
                     .finally(
@@ -62,6 +59,7 @@ class Sender{
                 this.numsValidator(target);
                 try{
                     this.maskPhone('.feedback-block__form-input_phone');
+                    this.maskPhone('.feedback__input-input');
                 }catch(e){
                     console.error(e);
                 };
@@ -116,14 +114,20 @@ class Sender{
         };
 
         this.maskPhone = (selector, masked = '+7 (___) ___-__-__') => {
-            const elems = document.querySelectorAll(selector);
+            let elems;
+
+            if(!window.fetch){
+                elems = document.getElementsByClassName(selector);
+            }else{
+                elems = document.querySelectorAll(selector);
+            }
         
             function mask(event) {
                 const keyCode = event.keyCode;
                 const template = masked,
                     def = template.replace(/\D/g, ""),
                     val = this.value.replace(/\D/g, "");
-                debugger;
+              
                 let i = 0,
                     newValue = template.replace(/[_\d]/g, function (a) {
                         return i < val.length ? val.charAt(i++) || def.charAt(i) : a;
@@ -148,10 +152,10 @@ class Sender{
         
             }
         
-            for (const elem of elems) {
-                elem.addEventListener("input", mask);
-                elem.addEventListener("focus", mask);
-                elem.addEventListener("blur", mask);
+            for(let i = 0; i < elems.length; i++){
+                elems[i].addEventListener("input", mask);
+                elems[i].addEventListener("focus", mask);
+                elems[i].addEventListener("blur", mask);
             }
             
         };
