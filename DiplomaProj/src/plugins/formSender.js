@@ -5,9 +5,6 @@ class Sender{
         this.successMessage = 'Спасибо! Мы скоро с Вами свяжемся.';
         this.check = false;
         this.formInputs;
-
-        // this.statusMessage = document.createElement('div');
-        // this.statusMessage.classList.add('preloader-wrap');
     }
 
     init(){
@@ -26,33 +23,34 @@ class Sender{
                 }
             });
 
-            if(this.check){
-                this.postData(this.body)
-                .then(response => {
-                    if(response.status !== 200){
-                        throw(new Error('Network status is not 200.'));
-                    }
-                    const popUpThanksWindow = document.querySelector('.popup-thank-bg');
-
-                    popUpThanksWindow.style.visibility = 'visible';
-                    popUpThanksWindow.style.cursor = 'pointer';
-
-                    popUpThanksWindow.addEventListener('click', () => {
-                        popUpThanksWindow.style.visibility = 'hidden';
-                    });
-                })
-                .catch(error => {
-                    this.showResMessage(this.errorMessage);
-                    console.error(error);
-                })
-                .finally(
-                    this.clearInputs()
-                );
+            if(!window.fetch){
+                    this.ieFormSender(this.body);
             }else{
-                console.log('no');
+                if(this.check){
+                    this.postData(this.body)
+                    .then(response => {
+                        if(response.status !== 200){
+                            throw(new Error('Network status is not 200.'));
+                        }
+                        const popUpThanksWindow = document.querySelector('.popup-thank-bg');
+    
+                        popUpThanksWindow.style.visibility = 'visible';
+                        popUpThanksWindow.style.cursor = 'pointer';
+    
+                        popUpThanksWindow.addEventListener('click', () => {
+                            popUpThanksWindow.style.visibility = 'hidden';
+                        });
+                    })
+                    .catch(error => {
+                        this.showResMessage(this.errorMessage);
+                        console.error(error);
+                    })
+                    .finally(
+                        this.clearInputs()
+                    );
+                }
+    
             }
-
-           
         });
 
         this.form.addEventListener('input', (event) => {
@@ -62,8 +60,11 @@ class Sender{
                 this.wordsValidator(target);
             }else if(target.getAttribute('name') === 'phone'){
                 this.numsValidator(target);
-                this.maskPhone('.feedback-block__form-input_phone');
-
+                try{
+                    this.maskPhone('.feedback-block__form-input_phone');
+                }catch(e){
+                    console.error(e);
+                };
             }
         });
 
@@ -122,7 +123,7 @@ class Sender{
                 const template = masked,
                     def = template.replace(/\D/g, ""),
                     val = this.value.replace(/\D/g, "");
-                
+                debugger;
                 let i = 0,
                     newValue = template.replace(/[_\d]/g, function (a) {
                         return i < val.length ? val.charAt(i++) || def.charAt(i) : a;
@@ -164,38 +165,36 @@ class Sender{
                 }
             }
         
-    };
+        };
+
+        this.ieFormSender = (body) => {
+            this.request = new XMLHttpRequest();
+
+            this.request.addEventListener('readystatechange', () => {
+                if(this.request.readyState !== 4){
+                    return;
+                }
+
+                if(this.request.status === 200){
+                    const popUpThanksWindow = document.querySelector('.popup-thank-bg');
+    
+                    popUpThanksWindow.style.visibility = 'visible';
+                    popUpThanksWindow.style.cursor = 'pointer';
+
+                    popUpThanksWindow.addEventListener('click', () => {
+                        popUpThanksWindow.style.visibility = 'hidden';
+                    });
+                }else{
+                    console.error(this.request.status);
+                }
+            });
+
+            this.request.open('POST', './server.php');
+            this.request.setRequestHeader('Content-Type', 'aplication/json');
+            this.request.send(JSON.stringify(body));
+        };
 
     };
 } 
-
-//         this.form.addEventListener('input', (event) => {
-//             this.target = event.target;
-
-//             if(this.target.name === 'user_phone'){
-//                 this.numsValidator(this.target);
-//             }else if(this.target.name === 'user_name' || this.target.name === 'user_message'){
-//                 this.wordsValidator(this.target);
-//             }
-//         })
-
-       
-
-
-//         this.showResMessage = (messageTxt) => {
-//             this.statusMessage.innerHTML = `<p>${messageTxt}</p>`;
-//             this.clearInputs();
-//         };
-
-//         this.clearInputs = () => {
-//             this.formElems = this.form.elements;
-
-//             for(let elem of this.formElems){
-//                 if(elem.tagName.toLowerCase() === 'input'){
-//                     elem.value = '';
-//                 }
-//             }
-            
-//         };
 
 export default Sender;
