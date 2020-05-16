@@ -114,13 +114,13 @@ class Sender{
         };
 
         this.maskPhone = (selector, masked = '+7 (___) ___-__-__') => {
-            let elems;
+            let elems = document.querySelectorAll(selector);
 
-            if(!window.fetch){
-                elems = document.getElementsByClassName(selector);
-            }else{
-                elems = document.querySelectorAll(selector);
-            }
+            // if(!window.fetch){
+            //     elems = document.getElementsByClassName(selector);
+            // }else{
+            //     elems = document.querySelectorAll(selector);
+            // }
         
             function mask(event) {
                 const keyCode = event.keyCode;
